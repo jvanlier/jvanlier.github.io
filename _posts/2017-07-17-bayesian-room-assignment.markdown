@@ -7,7 +7,7 @@ math: true
 ---
 This first post is about using Bayes' theorem to assign devices to rooms probabilistically, based on noisy measurements. This is simply a nice and practical implementation of a concept from stats 101 - don't expect major scientific breakthroughs here. I like it because it's a very practical application of Bayes' rule. Stuff like this always resonates more with me than the artificial examples on Wikipedia about things like drug use.
 
-I'll explain the problem. In the meeting room module in [BlueSense][bs], we're getting data from a Wi-Fi sensor system that yields timestamps, anonymized MAC adresses of Wi-Fi client devices, the id of the nearest Wi-Fi sensor and the signal strength of the device as measured by the sensor. The measured devices are laptops and smartphones. A sensor is placed in the middle of each room. We need to assign devices to the rooms they're in based on this data alone. Unfortunately the sensor density in these situations is too low to apply a more advanced technique like trilateration.
+I'll explain the problem. In the meeting room module in [BlueSense][bs], we're getting data from a Wi-Fi sensor system that yields timestamps, anonymized MAC addresses of Wi-Fi client devices, the id of the nearest Wi-Fi sensor and the signal strength of the device as measured by the sensor. The measured devices are laptops and smartphones. A sensor is placed in the middle of each room. We need to assign devices to the rooms they're in based on this data alone. Unfortunately the sensor density in these situations is too low to apply a more advanced technique like trilateration.
 
 Now, these measurements are quite noisy. A device sitting in one place, can at one moment be measured with -40 dBm and at the next with -50 dBm. Even though the device didn't move and line of sight was maintained all the time. This is a 7 meter difference, assuming 2.4 Ghz, a transmission power of +10 dBm and free space. If you're looking to assign devices to different rooms based on signal strength, this could be the difference between room A and B (see the line for $$P_t = 10.0\, [dBm]$$): 
 
@@ -19,7 +19,7 @@ We need to report report on this as it's going on, i.e. in real-time, updated ev
 
 We used to take a pretty naive approach to the device-to-room assignment problem: we'd simply assign devices to the room we saw them in last. An issue that we noticed is that a device could have been in room A for a long time, but just before the real-time analysis would output a result, we get a measurement that's way off which ends up assigning that device to room B. Hence, the result for that minute would show this device being in room B. However, intuitively we know that this device has been in room A for a long time and won't move to room B just like that (considering the fact that these rooms are meeting rooms and that there's usually two completely unrelated meetings going on in nearby rooms in this building). This leads flip-flopping behavior with device counts per room changing erratically from one minute to the next. 
 
-We can instead assign devices to rooms probablistically using Bayes' rule, which naturally uses the historical measurements to form a belief of where devices are. As more evidence gets accumulated about a device being in a particular room, the corresponding belief gets stronger and stronger.
+We can instead assign devices to rooms probabilistically using Bayes' rule, which naturally uses the historical measurements to form a belief of where devices are. As more evidence gets accumulated about a device being in a particular room, the corresponding belief gets stronger and stronger.
 
 ## Bayes' rule 
 [Bayes' rule][bayes] is stated mathematically as follows:
@@ -76,8 +76,8 @@ Let's start by simulating measurements for a device that's actually in room B. A
 import pandas as pd
 
 # I have omitted the polygon definition in the region DataFrame for brevity,
-# because I can't add the plotting code unfortunately since it's in a a 
-# propietary library.
+# because I can't add the plotting code unfortunately since it's in a 
+# proprietary library.
 regions = pd.DataFrame({'id': ['A', 'B', 'C', 'D', 'E', 'F', 'N']}) \
               .set_index('id')
 
