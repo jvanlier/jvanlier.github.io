@@ -7,26 +7,16 @@ math: true
 ---
 This first post is about using Bayes' theorem to assign devices to rooms probabilistically, based on noisy measurements. I like it because it's a very practical application of Bayes' rule. Examples like these always resonate more with me than the artificial examples on Wikipedia about things like drug use.
 
-I'll explain the problem. In the meeting room module in [BlueSense][bs], we're getting data from a Wi-Fi sensor system that yields timestamps, anonymized MAC addresses of Wi-Fi client devices, the id of the nearest Wi-Fi sensor and the signal strength of the device as measured by the sensor. The measured devices are laptops and smartphones. A sensor is placed in the middle of each room. We need to assign devices to the rooms they're in based on this data alone. Unfortunately the sensor density in these situations is too low to apply a more advanced technique like trilateration.
+Here's the problem. In the meeting room module in [BlueSense][bs], we're collecting data from a Wi-Fi sensor system that measures the presence of Wi-Fi client devices. The systems measures the MAC address, which uniquely identifies a Wi-Fi device, and the strength of the received Wi-Fi signal. There is a sensor in every room, but there aren't enough sensors to apply an advanced reconstruction technique such as trilateration.
 
-Now, these measurements are quite noisy. A device sitting in one place, can at one moment be measured with -40 dBm and at the next with -50 dBm. Even though the device didn't move and line of sight was maintained all the time. This is a 7 meter difference, assuming 2.4 Ghz, a transmission power of +10 dBm and free space. If you're looking to assign devices to different rooms based on signal strength, this could be the difference between room A and B (see the line for $$P_t = 10.0\, [dBm]$$): 
-
-![Power loss](/assets/img/bayes_rooms/power_loss.png)
-
-Luckily in our case, the walls between the rooms dampen the signal significantly, so the nearest sensor approximation is reasonable. The nearest sensor (the only one that has line of sight) usually comes out on top.
-
-We need to report report on this as it's going on, i.e. in real-time, updated every minute. We're counting the amount of devices per room and our users expect these counts to be accurate, because they make decisions to, for example, release meeting rooms if a reservation turns out to be a no-show after 15 minutes or so.
-
-We used to take a pretty naive approach to the device-to-room assignment problem: we'd simply assign devices to the room we saw them in last. An issue that we noticed is that a device could have been in room A for a long time, but just before the real-time analysis would output a result, we get a measurement that's way off which ends up assigning that device to room B. Hence, the result for that minute would show this device being in room B. However, intuitively we know that this device has been in room A for a long time and won't move to room B just like that (considering the fact that these rooms are meeting rooms and that there's usually two completely unrelated meetings going on in nearby rooms in this building). This leads flip-flopping behavior with device counts per room changing erratically from one minute to the next. 
-
-We can instead assign devices to rooms probabilistically using Bayes' rule, which naturally uses the historical measurements to form a belief of where devices are. As more evidence gets accumulated about a device being in a particular room, the corresponding belief gets stronger and stronger.
+A naive approach to determine in which room a device is, involves ranking the measurements on signal strength, taking the highest signal, finding out in which room the corresponding sensor is, and assigning the device to that room. Simple, right? This actually works ok-ish, because the walls between the rooms dampen the signal a bit, leading the room that the device is in to usually come out on top. But every now and then the system measures a signal that's way off, which causes us to assign the device to the wrong room. We need some way to deal with the noise. Bayes' theorem is well suited to these kinds of problems, as we shall see. 
 
 ## Bayes' rule 
 [Bayes' rule][bayes] is stated mathematically as follows:
 
 $$P(A \vert B) = \frac{P(B \vert A) P(A)}{P(B)}$$
 
-Let's assume for a minute that there are only two rooms called A and B, and a "no room" option called N. Let's create the equations for A. We get: 
+Let's assume for a minute that there are only two rooms named A and B, and a "no room" option named N. Let's create the equations for calculating the probability that the device is in A. We get: 
 
 $$P(i_A \vert m_A) = \frac{P(m_A \vert i_A) P(i_A)} { P(m_A) }$$
 
@@ -39,27 +29,27 @@ The denominator $$P(m_A)$$ can be expanded to:
 
 $$P(i_A \vert m_A) = \frac{P(m_A \vert i_A) P(i_A)} { P(m_A  \vert  i_A) P(i_A) + P(m_A  \vert  i_B) P(i_B) + P(m_A  \vert  i_N) P(i_N) }$$
 
-$$P(m_A \vert i_B)$$ is the probability that we see a measurement in A, given that the device is actually in B.
+Two new probabilities popped up in the denominator. $$P(m_A \vert i_B)$$ is the probability that we see a measurement in A, given that the device is actually in B. Likewise, $$P(m_A  \vert  i_N) P(i_N)$$ is the probability that we see a measurement in N (no room at all) even though the device is in B.
 
-What if we get a measurement in room B? The posterior that the device is in A is given by: 
+What if we get a measurement in room B? The posterior that the device is actually in A is given by: 
 
 $$P(i_A \vert m_B) = \frac{P(m_B \vert i_A) P(i_A)} { P(m_B  \vert  i_A) P(i_A) + P(m_B  \vert  i_B) P(i_B) + P(m_B  \vert  i_N) P(i_N) }$$
 
 Only the numerator changes on the right side. The denominator is basically used to normalize the output between 0 and 1.
 
-Same for a measurement in room N.
+The equation for the event that a measurement is seen in N can be constructed in the same way.
 
-Ok, that's it for room A. The probabilities for B and N are calculated in the same way, just make the appropriate substitutions for $$i_A$$ in the numerator and on the left side of the equation. 
+That's it for room A. The probabilities for B and N are calculated in the same way, just make the appropriate substitutions for $$i_A$$ on the left side of the equation and in the numerator on the right side. 
 
 ### Priors
 In order to evaluate these equations, we need to quantify our prior beliefs for $$P(i_A)$$, $$P(i_B)$$ and $$P(i_N)$$. Let's assume for now that it's equally likely for a device to be in any of the three locations, so $$\frac{1}{n}$$ where $$n$$ is the amount of rooms + 1 (to account for the "no room" case). So, $$\frac{1}{3}$$ for all three priors. 
 
-This initial prior value is only used the very first time we see a device. For subsequent measurements, we used the posterior calculated previously as the new prior.
+This initial prior value is only used the very first time we see a device. For subsequent measurements, we use the posterior calculated previously as the new prior.
 
 Finally, we need to think about the probability that a device gets measured in room A, if it is indeed in room A: $$ P(m_A \vert i_A) $$. 
 This is obviously based on multiple factors such as room size, sensor placement, etc. Empirically, we have found this to be approximately equal to $$\frac{3}{5}$$.
  
-For simplicity, we'll assign $$\frac{1}{n-1} \times (1-\frac{3}{5})$$ to the probabilities that we get measurements in B or N while the device is in A. That would be $$\frac{1}{5}$$ in this example with $$n=3$$. To improve this further, we could make this inversely proportional to the distance from room A to the other locations (i.e. the probablity decreases if the room is further away), but I like to keep things simple as long as possible. Additional complexity can always be introduced later later if our simple assumptions don't seem to work.
+For simplicity, we'll assign $$\frac{1}{n-1} \times (1-\frac{3}{5})$$ to the probabilities that we get measurements in B or N while the device is in A. That would be $$\frac{1}{5}$$ in this example with $$n=3$$. To improve this further, we could make this inversely proportional to the distance from room A to the other locations (i.e. the probability decreases if the room is further away), but I like to keep things simple as long as possible. Additional complexity can always be introduced later later if our simple assumptions don't seem to work.
 
 ## A Python-based simulation
 
@@ -75,9 +65,8 @@ Let's start by simulating measurements for a device that's actually in room B. A
 {% highlight python %}
 import pandas as pd
 
-# I have omitted the polygon definition in the region DataFrame for brevity,
-# because I can't add the plotting code unfortunately since it's in a 
-# proprietary library.
+# I have omitted the polygon definition in the region DataFrame,
+# because the plotting code is part of a proprietary library.
 regions = pd.DataFrame({'id': ['A', 'B', 'C', 'D', 'E', 'F', 'N']}) \
               .set_index('id')
 
@@ -122,7 +111,6 @@ def simulate(priors):
     probabilities = priors
 
     for i, (actual_region_id, measured_region_id) in enumerate(sim_pairs):
-        measured_reg = regions.loc[measured_region_id]
         probabilities = calc_posterior(probabilities, measured_region_id)
 
         print_probabilities(i, probabilities)
@@ -151,7 +139,7 @@ To compensate for this, we've put a minimum bound on probabilities of 0.01. It's
 The green star shows the actual device location, the purple room shows where the measurement was and the text inside the room indicates the room name and the probability that the device is in that room.
 
 ## Thoughts
-Ok, this shows the desired behavior: we don't immediately assign a device to the latest known room if there's a strong prior belief that this device is somewhere else. But we can still convince it that it did in fact move, after a couple of measurements have been received. Much better than the naive solution we've been using so far. 
+Alright, this shows the desired behavior: we don't immediately assign a device to the latest known room if there's a strong prior belief that this device is somewhere else. But we can still convince it that it did in fact move, after a couple of measurements have been received. Much better than the naive solution we've been using so far. 
 
 
 {::comment}
