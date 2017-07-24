@@ -5,7 +5,7 @@ date:   2017-07-17 12:00:00 +0200
 categories: blog
 math: true
 ---
-This first post is about using Bayes' theorem to assign devices to rooms probabilistically, based on noisy measurements. This is simply a nice and practical implementation of a concept from stats 101 - don't expect major scientific breakthroughs here. I like it because it's a very practical application of Bayes' rule. Stuff like this always resonates more with me than the artificial examples on Wikipedia about things like drug use.
+This first post is about using Bayes' theorem to assign devices to rooms probabilistically, based on noisy measurements. I like it because it's a very practical application of Bayes' rule. Examples like these always resonate more with me than the artificial examples on Wikipedia about things like drug use.
 
 I'll explain the problem. In the meeting room module in [BlueSense][bs], we're getting data from a Wi-Fi sensor system that yields timestamps, anonymized MAC addresses of Wi-Fi client devices, the id of the nearest Wi-Fi sensor and the signal strength of the device as measured by the sensor. The measured devices are laptops and smartphones. A sensor is placed in the middle of each room. We need to assign devices to the rooms they're in based on this data alone. Unfortunately the sensor density in these situations is too low to apply a more advanced technique like trilateration.
 
