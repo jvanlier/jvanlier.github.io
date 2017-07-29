@@ -26,7 +26,7 @@ Mandatory coin toss example. Of course, nobody ever does this in real life, but 
 
 Suppose that you have a coin and you want to figure out if it's biased towards coming up as heads when tossed. But you think it's not biased, because most coins are fair.
 
-You decide to toss it 20 times and count the amount of times you see heads. You're willing to let go of your initial hypothesis that it's *not* biased if the amount of heads you observed is very unlikely to have occured by chance. 
+You decide to toss it 20 times and count the amount of times you see heads. You're willing to let go of your initial hypothesis that it's *not* biased if the amount of heads you observed is very unlikely to have occurred by chance. 
 
 This is a hypothesis test. In a hypothesis test, you assume everything is fine - the coin is not biased (this is $H_0$) and you're looking for evidence to the contrary.
 
@@ -117,7 +117,7 @@ sum(binom.pmf(n=n_tosses, k=[15,16,17,18,19,20], p=0.5))
 
 
 
-A faster way of doing that is just calling the survial function, which is 1-the CDF:
+A faster way of doing that is just calling the Survival Function, which is 1-the CDF:
 
 
 ```python
@@ -270,10 +270,6 @@ norm.sf(sample_mean, loc=μ, scale=σ/np.sqrt(n))
 
 `scipy.stats.norm.sf()` is useful to remember if you do this a lot and don't want to write a simulation every time. But I find that thinking about the data generation process and simulating that is a more natural way to handle these problems.
 
-# Closing thoughts
+# Closing notes
 
-Understanding the concept of the sampling distribution is key in these examples, and understanding the fact that you can simulate new data assuming that $H_0$ is true. 
-
-Sometimes, you might not have a theory of how the data was generated. In other words, you might not be able to create a *generative model* to sampel data from. We were lucky in this case!
-
-That's it for now. I have a couple more complicated ideas in mind, but I'll save them for a future post.
+The key takeaway here is the concept of simulating the sampling distribution (under $H_0$), and then using that to reason about the probability of observing the thing you observed, assuming that $H_0$ is true. To simulate the distribution, you need to have some theory about how the data was generated, i.e. a *generative model*. We had one in this case, but we're not always this lucky! The next post in this series includes an example for a situation in which we don't have a generative model.
