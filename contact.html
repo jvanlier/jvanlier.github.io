@@ -1,0 +1,29 @@
+---
+layout: page
+title: Contact
+permalink: /contact/
+---
+
+Tel: +31 (0)6 5207 8873<br/>
+Email:  <a href="mailto:{{ site.email }}">{{ site.email }}</a><br/><br/>
+
+<ul class="social-media-list">
+  {% if site.linkedin_username %}
+    <li>
+    {% include icon-linkedin.html user=site.linkedin_name %}
+    </li>
+  {% endif %}
+
+  {% if site.github_username %}
+  <li>
+    {% include icon-github.html username=site.github_username %}
+  </li>
+  {% endif %}
+
+  {% if site.twitter_username %}
+  <li>
+    {% include icon-twitter.html username=site.twitter_username %}
+  </li>
+  {% endif %}
+</ul>
+

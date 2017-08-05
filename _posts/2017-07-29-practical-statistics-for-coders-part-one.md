@@ -22,18 +22,19 @@ from scipy.stats import norm, binom
 ```
 
 ## Coin toss
-Mandatory coin toss example. Of course, nobody ever does this in real life, but it's a nice warm-up. 
+Most of these things start with a coin toss example. I'll just follow suit because it's a good way to warm up.
 
-Suppose that you have a coin and you want to figure out if it's biased towards coming up as heads when tossed. But you think it's not biased, because most coins are fair.
+Suppose that you have a coin and you want to determine if it's biased towards landing as heads when tossed. Before tossing it, you have no reason to think that it's biased, so you assume it's fair.
 
-You decide to toss it 20 times and count the amount of times you see heads. You're willing to let go of your initial hypothesis that it's *not* biased if the amount of heads you observed is very unlikely to have occurred by chance. 
+You decide to toss it 20 times and count the amount of heads. You're willing to let go of your initial assumption that it's *not* biased if the amount of heads you observed is very unlikely to have occured by chance. 
 
-This is a hypothesis test. In a hypothesis test, you assume everything is fine - the coin is not biased (this is $H_0$) and you're looking for evidence to the contrary.
+This is a hypothesis test. In a hypothesis test, you assume there is nothing going on - the coin is not biased (this is $H_0$) and you're looking for evidence to the contrary.
 
-What's *very unlikely*? Let's say somebody else has done this same experiment a 100 times with a coin that has been proven to be completely fair. Sometimes this fair coin will come up with a lot of heads, sometimes with a lot of tails. This is purely due to chance. On average, you'd see 10 heads in 20 tosses. Of course, you don't want to throw your biased coin 100x20 times - that would be a waste of time. 
-But you can compare your result with these earlier experiments, and count how often a fair coin would show the behaviour that you observed with the coin you're testing. You decide that if the observation you make about your coin, or something even more extreme (even more heads!), only happens in less than 5% of the cases for a fair coin, the coin you used is likely not fair.
+What's *very unlikely*? Let's say somebody else has done this same experiment a 100 times with a coin that has been proven to be completely fair. Even this fair coin will sometimes land as heads (much) more often than tails. This is purely due to chance. On average, you'd see 10 heads in 20 tosses. The outcomes of these experiments, taken together, form a *distribution*.
 
-Now imagine that your coin came up with 15 heads. Let's see how often a fair coin would indeed come up with 15+ heads if you toss it 20 times. That "somebody else" can be a computer, and instead of 100 times we can easily repeat it 100,000 times.
+The result that you observe with the coin you're testing can be compared to this distribution. You decide that if the amount of heads that you observed with the coin you're testing, or something even more extreme (even more heads!), only occurred in less than 5% of the repeated experiments that form the distribution, the coin you used is likely not fair.
+
+Now imagine that your coin came up with 15 heads. Let's see how often a fair coin would indeed come up with 15+ heads if you toss it 20 times. That "somebody else" I mentioned earlier can be a computer, and instead of 100 repeats a computer can easily repeat it 100,000 times.
 
 
 ```python
@@ -42,14 +43,15 @@ n_tosses = 20
 n_heads = 15
 
 # Use np.random.choice to simulate coin tosses. A 1 counts as heads:
-results = [sum(np.random.choice([0, 1], size=n_tosses)) for _ in range(n_simulations)]
+results = [sum(np.random.choice([0, 1], size=n_tosses)) 
+           for _ in range(n_simulations)]
 num_n_heads_or_more = len([r for r in results if r >= n_heads])
 
-print("{} times out of {} the simulation came out with {} heads or more"
+print("{} times out of {} we observed {} heads or more"
       .format(num_n_heads_or_more, n_simulations, n_heads))
 ```
 
-    2034 times out of 100000 the simulation came out with 15 heads or more
+    2164 times out of 100000 we observed 15 heads or more
 
 
 Let's see what this looks like:
@@ -65,10 +67,10 @@ plt.xlabel("Amount of heads"); plt.ylabel("count");
 ```
 
 
-![png](/assets/img/practical_statistics_for_coders_part_one_files/practical_statistics_for_coders_part_one_5_0.png)
+![png](/assets/img/practical-statistics-for-coders-part-one/practical-statistics-for-coders-part-one_5_0.png)
 
 
-The fraction of times that you saw 15 heads or more is what's called a p-value! This is the probability to see the result you're looking for, or something more extreme than that, if the coin is unbiased (if $H_0$ is true).
+The fraction of times that you saw 15 heads or more is what's called a p-value! This is the probability to observe the result of your experiment, or something more extreme than that, if the coin is unbiased (if $H_0$ is true).
 
 
 ```python
@@ -76,34 +78,34 @@ p_value = num_n_heads_or_more / n_simulations
 print(p_value)
 ```
 
-    0.02034
+    0.02164
 
 
 Only 2% of the time!
 
-Ok, this is less than 5%, the **significance level** that you decided initially. So now you can conclude that the coin is indeed biased: the probability of this (or something more extreme) happening by chance for an unbiased coin is very small.
+This is less than 5%, the **significance level** that you decided on initially. Now you can conclude that the coin is indeed biased: the probability of this (or something more extreme) happening by chance for an unbiased coin is very small.
 
-What you would have done if you followed the textbook, is to take the binomial Probability Mass Function:
+What you would have done if you followed the textbook, is to take the binomial probability formula:
 
-$\ {\displaystyle \textstyle {n \choose k}\,p^{k}(1-p)^{n-k}}$
+$ {\displaystyle \textstyle {n \choose k}\,p^{k}(1-p)^{n-k}}$
 
 and sum the probabilities for every bin from 15 up to 20:
 
-$\ {\displaystyle \textstyle {20 \choose 15}\,\frac{1}{2}^{15}(1-\frac{1}{2})^{20-15}} +$
+${\displaystyle \textstyle {20 \choose 15}\,\frac{1}{2}^{15}(1-\frac{1}{2})^{20-15}} +$
 
-$\ {\displaystyle \textstyle {20 \choose 16}\,\frac{1}{2}^{16}(1-\frac{1}{2})^{20-16}} + $
+$ {\displaystyle \textstyle {20 \choose 16}\,\frac{1}{2}^{16}(1-\frac{1}{2})^{20-16}} + $
 
-$\ {\displaystyle \textstyle {20 \choose 17}\,\frac{1}{2}^{17}(1-\frac{1}{2})^{20-17}} + $
+$ {\displaystyle \textstyle {20 \choose 17}\,\frac{1}{2}^{17}(1-\frac{1}{2})^{20-17}} + $
 
-$\ {\displaystyle \textstyle {20 \choose 18}\,\frac{1}{2}^{18}(1-\frac{1}{2})^{20-18}} + $
+$ {\displaystyle \textstyle {20 \choose 18}\,\frac{1}{2}^{18}(1-\frac{1}{2})^{20-18}} + $
 
-$\ {\displaystyle \textstyle {20 \choose 19}\,\frac{1}{2}^{19}(1-\frac{1}{2})^{20-19} +} $
+$ {\displaystyle \textstyle {20 \choose 19}\,\frac{1}{2}^{19}(1-\frac{1}{2})^{20-19} +} $
 
-$\ {\displaystyle \textstyle {20 \choose 20}\,\frac{1}{2}^{20}} \approx 0.0207 $
+$ {\displaystyle \textstyle {20 \choose 20}\,\frac{1}{2}^{20}} \approx 0.0207 $
 
-Or directly take the formula for the Cumulative Distribution Function (CDF), but I haven't seen that one in my textbook. Or, approximate this with a normal distribution, calculate a Z-score, and look it up in a probability table - we'll see an example of this in the next section. Either way, it seems like a lot more work than writing a for loop.
+It's faster to directly use the formula for the Cumulative Distribution Function (CDF), but I haven't seen that one in my textbook. Either way, it seems like a lot more work than writing a for loop.
 
-Should you want to evaluate it anyway, instead of doing a simulation, then you can use Python's scipy module which makes this quite easy. The Probability Mass Function can be evaluated for various values of $k$ by invoking the `pmf()` function in `scipy.stats.binom`:
+Of course, the `pmf()` function (Probability Mass Function) in the `scipy.stats.binom` module can be used to evaluate the function instead of doing the math manually like I did above. It accepts a list for variable `k` so you can compute multiple probabilities in one go:
 
 
 ```python
@@ -117,7 +119,7 @@ sum(binom.pmf(n=n_tosses, k=[15,16,17,18,19,20], p=0.5))
 
 
 
-A faster way of doing that is just calling the Survival Function, which is 1-the CDF:
+A faster way of doing that is just calling the Survial Function, which is 1-the CDF:
 
 
 ```python
@@ -131,11 +133,11 @@ binom.sf(n=n_tosses, k=n_heads-1, p=0.5)
 
 
 
-If you do something like this often, you might want to remember `scipy.stats.binom.sf()`, because it's just a 1-liner. But the point of this all is that you don't need to remember it if you know how to write a loop like the above!
+So, here you go: 3 ways to compute the same answer. You can remember these functions if you like, but the point of this all is that you don't have to! As long as you can reason about how to data was generated in the first place and can write a simple for loop.
 
 # Statistical significance of a mean
 
-Suppose you want to find out if the average height of adults has increased. Some time ago, it was 165 cm with a standard deviation of 20 cm. This is the null hypothesis, or $H_0$. We assume that this is still the case. $H_A$ is the alternative hypothesis, claiming that the average height increased.
+Suppose you want to find out if the average height of adults has increased. We are told that some time ago, it was normally distributed with a mean of 165 cm and a standard deviation of 20 cm. This is the null hypothesis, or $H_0$. We assume that this is still the case. $H_A$ is the alternative hypothesis, claiming that the average height increased.
 
 You are handed a random sample of heights for adults, say n = 100 (assume the heights are independent and unbiased, i.e. representative of the general population).
 
@@ -162,7 +164,7 @@ plt.xlabel("height [cm]"); plt.ylabel("count");
 ```
 
 
-![png](/assets/img/practical_statistics_for_coders_part_one_files/practical_statistics_for_coders_part_one_16_0.png)
+![png](/assets/img/practical-statistics-for-coders-part-one/practical-statistics-for-coders-part-one_16_0.png)
 
 
 
@@ -178,7 +180,7 @@ sample_mean
 
 
 
-Ok, so this seems like it's more than 165. But we can't reject $H_0$ just yet. What we're seeing here might be due to random fluctuations.
+This seems like it's more than 165. But we can't reject $H_0$ just yet. What we're seeing here might be due to random fluctuations.
 
 We are still assuming that $H_0$ is true, so what we can do now is simulate taking a whole bunch of samples under the $H_0$ assumption and calculate the mean every time. Let's see what the distribution of means looks like:
 
@@ -195,13 +197,13 @@ plt.xlabel("height [cm]"); plt.ylabel("count");
 ```
 
 
-![png](/assets/img/practical_statistics_for_coders_part_one_files/practical_statistics_for_coders_part_one_19_0.png)
+![png](/assets/img/practical-statistics-for-coders-part-one/practical-statistics-for-coders-part-one_19_0.png)
 
 
 Notice that this distribution is much narrower. 
 A distribution such as this one is actually called a **sampling distribution** and is key to understanding these concepts.
 
-Ok, now we proceed in the same way as before. How many of the means are >= the sample mean?
+Ok, now we proceed in the same way as before. How many of the means are $\geq$ the sample mean?
 
 
 ```python
@@ -236,7 +238,7 @@ The Z-score is: $\displaystyle \frac{167.827 - 165}{2} = 1.414$
 
 Looking this up in a table yields 0.9207:
 
-![Z-table](/assets/img/practical_statistics_for_coders_part_one_files/z_table.png)
+![Z-table](/assets/img/practical-statistics-for-coders-part-one/z_table.png)
 
 Now you have to remember that this is the area on the left side. So 1 - 0.9207 = 0.0793 is our p-value. Which is close enough to the simulation.
 
@@ -268,8 +270,8 @@ norm.sf(sample_mean, loc=μ, scale=σ/np.sqrt(n))
 
 
 
-`scipy.stats.norm.sf()` is useful to remember if you do this a lot and don't want to write a simulation every time. But I find that thinking about the data generation process and simulating that is a more natural way to handle these problems.
+`scipy.stats.norm.sf()` is useful to remember if you do this a lot and don't want to write a loop every time. But I find that thinking about the data generation process and simulating that is a more natural way to handle these problems.
 
 # Closing notes
 
-The key takeaway here is the concept of simulating the sampling distribution (under $H_0$), and then using that to reason about the probability of observing the thing you observed, assuming that $H_0$ is true. To simulate the distribution, you need to have some theory about how the data was generated, i.e. a *generative model*. We had one in this case, but we're not always this lucky! The next post in this series includes an example for a situation in which we don't have a generative model.
+The key takeaway here is the concept of generating the sampling distribution (under $H_0$), and then using that to reason about the probability of observing the thing you observed, assuming that $H_0$ is true. To generating the distribution, you need to have some theory about how the data was generated, i.e. a *generative model*. We had that in these examples, but we're not always this lucky! The next post in this series includes an example for a situation in which we don't have a generative model.
