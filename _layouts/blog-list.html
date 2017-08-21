@@ -1,0 +1,21 @@
+---
+layout: default
+---
+<h1 class="post-title">{{ page.title | escape }}</h1>
+<p>
+    I post here periodically about interesting things I run into. Advance warning: there will be some math and code!
+</p>
+<br/>
+
+<ul class="post-list">
+    {% for post in site.posts %}
+    <li>
+
+        <h2 style="margin-bottom: 0px">
+            <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </h2>
+        {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+        <span class="post-meta">{{ post.date | date: date_format }}</span>
+    </li>
+    {% endfor %}
+</ul>
