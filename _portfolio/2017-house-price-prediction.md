@@ -9,7 +9,7 @@ from:  2017-07-01 00:00:00 +0200
 to: 2017-08-16 00:00:00 +0200
 ---
 
-This is a personal project. I competed in [Kaggle's "House Prices: Advanced Regression Techniques"][kaggle] competition partly because I simply liked the challenge, partly with the intent of getting some Python code online as part of my portfolio, but mostly because I wanted to experiment with Machine Learning automation. I made it to the top 5% so far. 
+This is a personal project. I competed in [Kaggle's "House Prices: Advanced Regression Techniques"][kaggle] competition partly because I simply liked the challenge, partly with the intent of getting some Python code online as part of my portfolio, but mostly because I wanted to experiment with automating parts of a Machine Learning pipeline. I made it to the top 5% so far.
 
 I started out with an exploratory analysis to understand the data. Armed with this knowledge, I built the following components:
 
