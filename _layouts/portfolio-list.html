@@ -1,0 +1,26 @@
+---
+layout: default
+---
+<h1 class="post-title">{{ page.title | escape }}</h1>
+<p>
+    This page contains a high level overview of the projects I've completed. I'm currently working through a backlog of
+    projects from the period 2014 - 2017, so expect more content soon!
+</p>
+<br/>
+
+<div class="row">
+    {% assign sortedPortfolio = site.portfolio | sort: 'to' %}
+    {% for item in sortedPortfolio reversed %}
+        {% assign yearFrom = item.from | date: "%Y" %}
+        {% assign yearTo = item.to | date: "%Y" %}
+        <div class="col-sm-4">
+            <a href="{{ item.url | relative_url }}" title="Read more about Manchester United" class="portfolio-block"
+               style="background-image: url('/assets/img/{{ item.id }}-thumb.png');">
+
+                {{ item.title }}
+
+                <small>({{ yearFrom }}{% if yearFrom != yearTo %}-{{ yearTo }}{% endif %})</small>
+            </a>
+        </div>
+    {% endfor %}
+</div>

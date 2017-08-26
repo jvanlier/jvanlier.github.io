@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{% assign date_format = "%b, %Y" %}
+{% assign from_date = page.from | date: date_format %}
+{% assign to_date = page.to | date: date_format %}
+
+<h1 class="post-title">{{ page.title }}</h1>
+<span class="post-meta">{{ from_date }}{% if from_date != to_date %} - {{ to_date }}{% endif %}</span>
+
+<p>
+<img src="/assets/img/{{ page.id }}.png" alt="[{{ page.title }} image]"/>
+</p>
+
+
+
+{{ content }}
+
+<p style="font-size: 10pt; margin-top: 30px">
+{% if page.personal %}<strong>Personal project</strong><br/>{% endif %}
+{% if page.industry %}<strong>Industry:</strong> {{ page.industry }}<br/>{% endif %}
+<strong>Tech:</strong> {{ page.tech }}<br/>
+<strong>Methods applied:</strong> {{ page.methods }}<br/>
+</p>
+
