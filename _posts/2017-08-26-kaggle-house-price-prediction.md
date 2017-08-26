@@ -82,7 +82,7 @@ Secondly, manual outlier removal had - by far - the biggest impact on my score. 
 The ensemble model selection could also be automated.
 
 # Conclusion
-I described how I set up the system with which I've tested my assumptions in Kaggle's "House Price: Advanced Regression Techniques" challenge. Of course, something like this is only practically feasible with a small data set, but it's been very useful to climb the ranks and it was a lot of fun to build. 
+I described how I set up the system with which I've tested my assumptions in Kaggle's "House Prices: Advanced Regression Techniques" challenge. Of course, something like this is only practically feasible with a small data set, but it's been very useful to climb the ranks and it was a lot of fun to build. 
 
 
 [kaggle_hp]: https://www.kaggle.com/c/house-prices-advanced-regression-techniques
