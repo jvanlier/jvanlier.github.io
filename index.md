@@ -1,11 +1,17 @@
 ---
 layout: landing
 ---
-I create business value using data science. I have an all-round profile with a deep specialization in machine learning. My experience gives me the ability to pick up many different roles in projects. I'm known for my capability to rapidly churn out proof-of-concepts and experiments. The engineer in me is just as happy to deploy an analysis or model to production at scale with high quality code. I tend to combine these activities with a bit of project management and usually take on a senior / lead role in a team. In each case, I find it important to build things that people actually want to use and proactively seek out stakeholders to discuss approaches and results. 
+I create business value using data science and machine learning. I like to build data products that help people make important decisions. I'm highly proficient with Python, Hadoop and Spark. As a team player with 7 years of professional experience, I function well in a senior role in a team, where I can take up a bit of project management and mentor junior data scientists. 
 
-I'm genuinely curious and strive to learn something new every day. I'm persistent and I take great pride in coming up with creative solutions to difficult problems.
+Accomplishments:
+- marketing: customer segmentation
+- predictive maintenance: anomaly detection, predicting which part might break (including probability) in metro and tram vehicles
+- building an end-to-end IoT big data platform (lambda architecture)
+- understanding crowd movements in indoor locations as measured by noisy sensors: density distribution approximations (heatmaps, flowmaps), walking path reconstruction, dwelltimes, calibrated visitor counts, Kalman filtering
+- network science: recognizing teams within a company based solely on noisy Wi-Fi device data; quantifying collaboration between teams
+- time series prediction: predicting future highway traffic, predicting future office capacity requirements, short term (30 minute) visitor predictions in a restaurant
 
-Keywords that describe my profile: Big Data, Data Science, Artificial Intelligence, Machine Learning, Deep Learning, Computer Science, Statistics, Mathematics, Python (numpy, pandas, scikit-learn, scipy, matplotlib, pycm3, keras, flask), Java, JavaScript, Hadoop, Spark, Storm, Kafka, Hive, SQL, MySQL, PostgreSQL, NoSQL, MongoDB, NodeJS, Linux, Git.
+Keywords: Big Data, Data Science, Artificial Intelligence, Machine Learning, Deep Learning, Computer Science, Statistics, Mathematics, Python (numpy, pandas, scikit-learn, scipy, matplotlib, pymc3, keras, flask), Java, JavaScript, Hadoop, Spark, Storm, Kafka, Hive, SQL, MySQL, PostgreSQL, NoSQL, MongoDB, NodeJS, Linux, Git.
 
 <br/>**Current status: available for 4 days a week as of October 2nd, 2017!** I mainly operate in the region Amsterdam - Leiden - The Hague - Rotterdam - Utrecht in the Netherlands (in other words: the Randstad).
 
