@@ -14,14 +14,16 @@ I haven't decided yet if I want to keep going - it's kind of a time sink and the
 The code is on [GitHub][git]. 
  
 # Approach
-I started with an exhaustive exploratory analysis. See [here][git_explo] for the Jupyter Notebook. The dataset is a very small, leading to lots of freedom to experiment in ways that are usually not practically feasible. That's exactly what I set out to do here: I set up my manual transformations to be optional, such that they can be filtered based on their empirical effectiveness. This was combined with a function that automatically transforms the remaining features on a best-effort basis and an imputation algorithm to deal with missing data. See [here][git_ml] for the Machine Learning Notebook.
+The competition provides a dataset of 2919 houses, 50% of which is test data. The goal is to predict the sales price for each house house price based on the other 79 features.
 
-I concentrated my efforts on the data preparation steps so I'd like to go over that in detail. The predictions are delivered by a straight forward ensemble of multiple models, which will be covered briefly as well.
+I started with an exhaustive exploratory analysis. See [here][git_explo] for the Jupyter Notebook. The dataset is a very small, resulting in lots of freedom to experiment in ways that are usually not practically feasible. That's exactly what I set out to do here: I set up my manual transformations to be optional, such that they can be filtered based on their empirical effectiveness. Only the ones that are effective are applied. Some features now still need work before being ready to be fed into a machine learning algorithm, so the data subsequently gets transformed automatically as needed on a best-effort basis (such as one-hot-encoding). If there's any missing values, they are automaticaly imputed based on similarity to other houses. See [here][git_ml] for the Machine Learning Notebook.
+
+Since I concentrated my efforts on the data preparation steps, I'd like to go over that in detail. The predictions are delivered by a straight forward ensemble of multiple models, which I'll only cover briefly.
 
 ## Data preparation
 
 ### Manual data transformations
-The main goal of my approach was to understand which transformations work and which don't, rather than relying on hunches and intuition. To enable this, I defined my manual transformations as function rather than applying them directly. Each transformation function takes a DataFrame and returns a (transformed) DataFrame. This setup basically makes each transformation optional and makes it easy to quantify their effectiveness. More on that below.
+The main goal of my approach was to understand which transformations work and which don't, rather than relying on hunches and intuition. To enable this, I defined my manual transformations as function rather than applying them directly. Each transformation function takes a DataFrame and returns a (transformed) DataFrame. This setup basically makes each transformation optional and makes it possible to quantify their effectiveness. More on that below.
   
 ### Automatic data transformation
 In order to make *optional* manual transformations a possibility, there has to be some kind of fallback operation that handles the features that were not transformed manually. I wrote a function that automatically applies all the required transformations that are needed to get a DataFrame to play well with scikit-learn. This function basically accepts any DataFrame and decides for each numeric feature whether it will scale it or leave it alone and uses label-encoding or one-hot-encoding for categorical features. Code [here][git_autotrans]. 
@@ -68,7 +70,7 @@ A mistake I made initially was *not* shuffling the data between tests. This caus
 ## Modelling
 Training the Machine Learning algorithms is straight forward, so I'll keep this brief. First, all effective manual transformations are applied. Followed by automatic transformations and imputation. I then chucked everything into a 10-fold Cross-Validated Grid Search for a couple of models: Ridge regression, Lasso regression, ElasticNet (which basically finds a combination between Ridge and Lasso), SVR (Support Vector Regressor) with RBF kernel (Radial Basis Function) and - of course - GBT (Gradient Boosted Trees).
 
-Why these models? I expected a regularized linear model to work well, because I spent a lot of effort to make numeric features more Gaussian, to handle outliers and to make features more linearly correlated with SalePrice. I had no expectation about whether L1 or L2 regularization would perform better, hence I ended up just trying them all. The SVR was added because I empirically found that it worked very well - no theoretical basis. GBT because, well, they always just work really well.
+Why these models? I expected a regularized linear model to work well, because I spent a lot of effort to make numeric features more Gaussian, to handle outliers and to make features more linearly correlated with SalePrice. I had no expectation about whether L1 or L2 regularization would perform better, hence I ended up just trying both. The SVR was added because I empirically found that it worked very well - no theoretical basis. GBT because, well, they always just work really well.
 
  An ensemble of Ridge + Elastic + SVR + GBT was used for my highest scoring submission. This performed better than any single model in isolation.
  
