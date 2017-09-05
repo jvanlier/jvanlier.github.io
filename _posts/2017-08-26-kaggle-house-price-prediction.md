@@ -14,7 +14,7 @@ I haven't decided yet if I want to keep going - it's kind of a time sink and the
 The code is on [GitHub][git]. 
  
 # Approach
-I started with an exhaustive exploratory analysis. See [here][git_explo] for the Jupyter Notebook. The dataset is a very small, leading to lots of freedom to experiment in ways that are usually not practically feasible. That's exactly what I set out to do here: I set up my manual transformations to be optional, such that they can filtered based on their empirical effectiveness. This was combined with a function that automatically transforms the remaining features on a best-effort basis and an imputation algorithm to deal with missing data. See [here][git_ml] for the Machine Learning Notebook.
+I started with an exhaustive exploratory analysis. See [here][git_explo] for the Jupyter Notebook. The dataset is a very small, leading to lots of freedom to experiment in ways that are usually not practically feasible. That's exactly what I set out to do here: I set up my manual transformations to be optional, such that they can be filtered based on their empirical effectiveness. This was combined with a function that automatically transforms the remaining features on a best-effort basis and an imputation algorithm to deal with missing data. See [here][git_ml] for the Machine Learning Notebook.
 
 I concentrated my efforts on the data preparation steps so I'd like to go over that in detail. The predictions are delivered by a straight forward ensemble of multiple models, which will be covered briefly as well.
 
