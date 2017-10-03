@@ -7,7 +7,7 @@ categories: blog
 I spent some time on [Kaggle's "House Prices: Advanced Regression Techniques"][kaggle_hp] competition the last couple of weeks. Partly because I simply liked the challenge, partly with the intent of getting some Python code online as part of my portfolio, but mostly because I wanted to experiment with automating parts of a Machine Learning pipeline. In this post, I'll share some details of my approach. I managed to get a top 5% score on August 16th, 2017 with a score of 0.11459. 
 
 {: style="text-align: center;"}
-![top5](/assets/img/blog/2017-08-23-kaggle-house-price-prediction/top5.png)
+![top5](/assets/img/blog/2017-08-26-kaggle-house-price-prediction/top5.png)
 
 I haven't decided yet if I want to keep going - it's kind of a time sink and there's no prize to collect at the end. But hey, there's three more years to go, so there's no rush.
 

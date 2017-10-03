@@ -6,7 +6,16 @@
     border: solid 1px lightgray;
     box-shadow: 4px 4px 8px #888888;
     display: block;
-    background-repeat: no-repeat;
     margin-bottom: 10px;
-    padding: 2px;
+}
+
+.portfolio-block-title {
+    width: 220px;
+    height: 40px;
+}
+
+.portfolio-block-image {
+    width: 217px;
+    height: 158px;
+    background-repeat: no-repeat;
 }

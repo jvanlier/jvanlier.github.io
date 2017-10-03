@@ -8,18 +8,24 @@ layout: default
 <h1 class="post-title">{{ page.title }}</h1>
 <span class="post-meta">{{ from_date }}{% if from_date != to_date %} - {{ to_date }}{% endif %}</span>
 
+
+
 <p>
 <img src="/assets/img/{{ page.id }}.png" alt="[{{ page.title }} image]"/>
+</p>
+
+<p style="font-size: 10pt; margin-bottom: 30px">
+    {% if page.personal %}<strong>Personal project</strong><br/>{% endif %}
+    {% if page.industry %}<strong>Industry:</strong> {{ page.industry }}<br/>{% endif %}
+    <strong>Tech:</strong> {{ page.tech }}<br/>
+
+    {% if page.methods %}
+        <strong>Methods applied:</strong> {{ page.methods }}<br/>
+    {% endif %}
 </p>
 
 
 
 {{ content }}
 
-<p style="font-size: 10pt; margin-top: 30px">
-{% if page.personal %}<strong>Personal project</strong><br/>{% endif %}
-{% if page.industry %}<strong>Industry:</strong> {{ page.industry }}<br/>{% endif %}
-<strong>Tech:</strong> {{ page.tech }}<br/>
-<strong>Methods applied:</strong> {{ page.methods }}<br/>
-</p>
 
