@@ -6,3 +6,5 @@ _site
 .ipynb_checkpoints/
 .idea/
 !/index.md
+
+.python-version
