@@ -6,18 +6,9 @@ categories: blog
 math: true
 ---
 
-A couple months ago I decided that it was time to lose some weight. So that's what I did. It's pretty easy when you cut through all the diet hype and bro science and realise that it's mostly just a matter of calories in, calories out. Eat less than you burn and voila, weight loss. 
+I lost some weight recently by eating a bit less. I tracked my weight and food intake with MyFitnessPal over a 3 month period and tried to hit a fixed caloric deficit, such that weight loss would be -0.5 kg / week. In order to set a caloric target with such a deficit, one needs to know first how much is burned on a daily basis: the Total Daily Energy Expenditure (TDEE). The way this is calculated in tools such as MyFitnessPal is as follows: calculate Basal Metabolic Rate (BMR) and multiply that by an activity level, typically 1.2 (couch potato) to 1.5 (highly active). It basically acts as a fudge factor — a term I will be using hereon out.
 
-To control the rate at which the weight is lost, it's wise to set a fixed fixed caloric deficit. Losing too much too quickly can be detrimental to holding on to lean body mass (muscle), and losing it too slowly means being stuck in a deficit for longer than necessary. There's an optimum here. I went with -0.5 kg / week after consulting multiple sources (mainly Martin Berkhan's articles and the Reddit AMA). There's approximately 7700 calories in 1 kg of fat, so -0.5 kg per week means a weekly deficit of 3850 cals. Spread out over 7 days, that's 550 cals per day. (We're technically talking kilocalories here, or kcals, but I'm going to just informally use "cals" here like most people do.) Easy so far. 
-
-Now, this deficit needs to be subtracted from your Total Daily Energy Expenditure, or TDEE. But how do you figure out what your TDEE is? One way to estimate your TDEE, is to first calculate your BMR, Base Metabolic Rate, the amount of energy that you need to just feed your organs and staying alive. There's formulas for this, such as the Harris-Benedict equation, that depend on gender, weight, length and age. Then the BMR gets multiplied by an activity multiplier. The formula suggests 1.2 for "sedentary", 1.375 for "lightly active" or 1.5 for "active". This is how MyFitnessPal sets your goals, and FitBit, and many other apps.
-
-This all is a bit wonky to me. The BMR estimate is exactly that: an estimate, based on a linear regression somebody did many years ago. And the activity multiplier seems like a vague fudge factor to make the equations sort-of work. Also, there's a big gap between 1.2 and 1.375. Maybe it should be 1.3 for some individuals? What would that be called, "very lightly active?" Well, this is why most people who are a bit serious about this, estimate their TDEE based on the two things they *can* observe, namely: weight (change) and cal intake. But the way I've seen this done isn't really satisfying to me either.
-
-Here's why. People tend to assume perfect weight measurements and perfect food tracking. But the weight you observe on a scale isn't necessarily your true weight: it depends on when you had your last bowel movement, the amount of retained fluids, etc. This is a form of *systematic uncertainty*. And the scale isn't perfect either. Step on it twice in a row and you'll see .1 or .2 kg differences. This is a source of *statistical uncertainty*. And tracking food perfectly is impossible, unless you put *every single thing* that goes into your mouth on a (perfect) scale. And even then there's differences between package labels and what's in a package.
-
-My goal here is to estimate the uncertainty on my activity multiplier, which I am renaming to "fudge factor" from hereon out. This gives me an uncertainty on my TDEE estimate. Inputs are a 3-month cal intake log and daily weight measurements. I'll be using the probablistic programming package **PyMC3**.
-
+I figured: instead of using an estimated self-reported fudge factor, why not infer it from data? Start with a best guess, then make small corrections to get closer to the desired -0.5 kg / week. This idea is not new, of course, but I haven't seen it done by accounting for uncertainty. Of which there is a lot: body weight measurements fluctuate from day to day, self-reported calories are often inaccurate and incomplete, etc. Uncertainty is useful, because it will allow me to be conservative if there is a large uncertainty. This could prevent undesired muscle loss.
 
 ```python
 import glob
@@ -374,7 +365,7 @@ The correlation is pretty high for daily data, and the p-value is low. The corre
 
 Simply going with daily data seems appropriate, However, as we've seen, the fudge factor histogram for daily data doesn't really allow for a reliable estimate.
 
-There is an interesting peak in the correlation plot at 10 days with a relatively low p-value (0.04), so let's use that. This yields a mean of 1.41 and a median of 1.38 for the fudge factor. That sounds reasonable to me. But let's see if we can do this in a nicer way using Bayesian methods. I'm hoping for a good result with the noisy 1-day data, alleviating the need for these period groupings.
+There is an interesting peak in the correlation values at 10 days with a relatively low p-value (0.04), so let's use that. This yields a mean of 1.41 and a median of 1.38 for the fudge factor. That sounds reasonable to me. But let's see if we can do this in a nicer way using Bayesian methods. I'm hoping for a good result with the noisy 1-day data, alleviating the need for these period groupings.
 
 # Fire up PyMC
 
@@ -509,10 +500,5 @@ Based on these results, I see no reason to go through the trouble of grouping th
 
 # Conclusion
 
-I've shown that we can use noisy daily weight loss & calory intake data to estimate a fudge factor (activity multiplier) and TDEE. The daily data can be pretty much directly inserted into the MCMC sampling procedure without much preprocessing. And the output is not just a point estimate, but an entire range of possiblities.
+I've shown that we can use noisy daily weight loss & calory intake data to estimate a fudge factor (activity multiplier) and TDEE. The daily data can be inserted pretty much directly into the MCMC sampling procedure without much preprocessing. And the output is not just a point estimate, but an entire range of possiblities.
 
-How might you use such a result, you say?
-
-An interesting use case that I'll be trying out soon is moving from a calory deficit to a surplus to gain a bit of muscle. But I want do to this safely, i.e. I don't want to gain too much fat in the process. So I suppose I'll set my cal intake target with a fudge factor of 1.32 rather than 1.45. This is a difference of 1200 calories per week for my BMR, which might not seem like a lot, but over the course of 5 months equates to 1 kg of unnecessary fat gain.
-
-So, wish me luck :-)
