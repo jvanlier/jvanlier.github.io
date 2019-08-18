@@ -29,4 +29,4 @@ Leiden University awarded him with a high-but-justified grade of 9.5/10 and we s
 ## Business value
 So far, this has been primarily an academic pursuit. I imagine that it could be used to optimize layouts of physical spaces by reducing chokepoints and collision points (i.e. people moving in opposite directions) or to understand changes in behaviour through time. Slow sales could possibly be explained by people simply not walking past the items, which could drive decisions to change the store layout.
 
-[bs]: {{ site.baseurl }}{% link _portfolio/2017-bs-bluesense.md %}
+[bs]: {{ site.baseurl }}{% link _projects/2017-bs-bluesense.md %}

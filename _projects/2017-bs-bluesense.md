@@ -21,5 +21,5 @@ Featured projects:
 - Indoor Navigation App - coming soon!
 
 [bs-website]: http://bluesense.io
-[flow]: {{ site.baseurl }}{% link _portfolio/2017-bs-retail-customer-flow.md %}
-[graph]: {{ site.baseurl }}{% link _portfolio/2017-bs-employee-graph-analysis.md %}
+[flow]: {{ site.baseurl }}{% link _projects/2017-bs-retail-customer-flow.md %}
+[graph]: {{ site.baseurl }}{% link _projects/2017-bs-employee-graph-analysis.md %}

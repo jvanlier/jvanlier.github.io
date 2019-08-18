@@ -33,18 +33,18 @@ plugins:
   - jekyll-feed
 
 collections:
-  - portfolio
+  - projects 
 
 collections:
-  portfolio:
+  projects:
     output: true
 
 defaults:
   - scope:
       path: ""
-      type: portfolio
+      type: projects
     values:
-      layout: portfolio-item
+      layout: project-item
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

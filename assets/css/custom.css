@@ -1,4 +1,4 @@
-.portfolio-block {
+.project-block {
     text-align: center;
     text-decoration: none;
     width: 220px;
@@ -9,12 +9,12 @@
     margin-bottom: 10px;
 }
 
-.portfolio-block-title {
+.project-block-title {
     width: 220px;
     height: 40px;
 }
 
-.portfolio-block-image {
+.project-block-image {
     width: 217px;
     height: 158px;
     background-repeat: no-repeat;

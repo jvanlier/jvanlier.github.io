@@ -9,19 +9,19 @@ layout: default
 <br/>
 
 <div class="row">
-    {% assign sortedPortfolio = site.portfolio | sort: 'to' %}
-    {% for item in sortedPortfolio reversed %}
+    {% assign sortedProjects = site.projects | sort: 'to' %}
+    {% for item in sortedProjects reversed %}
         {% assign yearFrom = item.from | date: "%Y" %}
         {% assign yearTo = item.to | date: "%Y" %}
         <div class="col-md-4">
-            <a href="{{ item.url | relative_url }}" class="portfolio-block">
+            <a href="{{ item.url | relative_url }}" class="project-block">
 
-                <div class="portfolio-block-title">
+                <div class="project-block-title">
                     {{ item.title }}
                     <small>({{ yearFrom }}{% if yearFrom != yearTo %}-{{ yearTo }}{% endif %})</small>
                 </div>
 
-                <div class="portfolio-block-image"
+                <div class="project-block-image"
                      style="background-image: url('/assets/img/{{ item.id }}-thumb.png');">
                 </div>
 

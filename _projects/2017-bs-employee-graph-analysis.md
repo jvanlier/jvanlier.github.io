@@ -25,4 +25,4 @@ The teams are colored using a network community detection technique based on the
 - Identify teams & team sizes. This can be used to find an optimal team-to-workspace allocation.
 - Quantity collaboration between teams. Want IT and business to "align" more often? Use this method to measure whether that actually improves over time.
 
-[bs]: {{ site.baseurl }}{% link _portfolio/2017-bs-bluesense.md %}
+[bs]: {{ site.baseurl }}{% link _projects/2017-bs-bluesense.md %}
