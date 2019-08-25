@@ -2,13 +2,7 @@
 layout: default
 ---
 <h1 class="post-title">{{ page.title | escape }}</h1>
-<p>
-    This page contains a high level overview of the projects I've completed. I'm currently working through a backlog of
-    projects from the period 2014 - 2017, so expect more content soon!
-</p>
-<br/>
-
-<div class="row">
+<div class="row" style="margin-top: 60px">
     {% assign sortedProjects = site.projects | sort: 'to' %}
     {% for item in sortedProjects reversed %}
         {% assign yearFrom = item.from | date: "%Y" %}
@@ -22,7 +16,7 @@ layout: default
                 </div>
 
                 <div class="project-block-image"
-                     style="background-image: url('/assets/img/{{ item.id }}-thumb.png');">
+                     style="background-image: url('/assets/img/{{ item.id }}-thumb.png')">
                 </div>
 
 
