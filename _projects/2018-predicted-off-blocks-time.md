@@ -31,6 +31,4 @@ At this point, after first creating a Python Flask based PoC, the model was hand
 ## Business value
 Improved existing estimates of departure time (Target Off Blocks Time, Estimated Off Blocks Time, Target Startup Approval Time) by 15% - 50%. The model was deployed to production, but business adoption remained a challenge.
 
-An important lesson learned was that that the airport knows very little about the turnaround process itself. All that data remains with the airline and handlers. That keeps the turnaround process relatively unpredictable from the airport's perspective. We hypothesize that detailed data about the turnaround process can help diagnose inefficiencies, root causes, and create much better features for the Predicted Off Blocks Time model. This led to the [Deep Turnaround][dt] project.
-
-[dt]: {{ site.baseurl }}{% link _projects/2019-deep-turnaround.md %}
+An important lesson learned was that that the airport knows very little about the turnaround process itself. All that data remains with the airline and handlers. That keeps the turnaround process relatively unpredictable from the airport's perspective. We hypothesize that detailed data about the turnaround process can help diagnose inefficiencies, root causes, and create much better features for the Predicted Off Blocks Time model. This led to the Deep Turnaround project.
