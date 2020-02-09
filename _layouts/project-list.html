@@ -1,40 +1,28 @@
 ---
 layout: default
 ---
+
 <h1 class="post-title">{{ page.title | escape }}</h1>
-    {% assign sortedProjects = site.projects | sort: 'to' %}
-    {% assign i = 0 %}
+
+<ul class="timeline">
+{% assign sortedProjects = site.projects | sort: 'to' %}
     {% for item in sortedProjects reversed %}
         {% assign timeFrom = item.from | date: "%b-%Y" %}
         {% assign timeTo = item.to | date: "%b-%Y" %}
-
-	<div class="row" style="margin-top: 4px">
-	    <div class="col-md-1 col-xs-1"; style="text-align: center">
-                <a href="#">[+]</a> 
-     	    </div>
-	    <div class="col-md-7 col-xs-7">
-	        <strong>{{ item.title }}</strong>
-		<br/>
-		{{ item.client }}
-	    </div>
-	    <div class="col-md-4 col-xs-4" style="text-align: right">
-	    	{{ timeFrom }}
-		{% if timeFrom != timeTo %} &ndash; {{ timeTo }}{% endif %}
-	    </div>
-	</div>
-	<div class="row" style="margin-bottom: 10px">
-	    <div class="col-md-12"> 
-                <div id="details-{{ i }}" style="margin: 4px; padding: 4px; border: solid 1px #CCC; display: none">
-	            {{ item.content }}
-	            <small><a href="javascript: toggle()">hide</a></small>
-	        </div>
-	    </div>
-	</div>
-	<hr/>
-	{% assign i = i | plus: 1 %}
+            <li>
+                <strong>{{ item.title }}</strong>
+                <span style="float: right">
+                    {{ timeFrom }}
+                    {% if timeFrom != timeTo %} &ndash; {{ timeTo }}{% endif %}
+                </span>
+                <div style="margin-bottom: 4px">{{ item.client }}</div>
+                <div>
+                    {{ item.content }}
+                </div>
+                <div style="color: #0155A3; font-size: 90%">
+                    Tech: {{ item.tech }}
+                </div>
+            </li>
     {% endfor %}
+</ul>
 
-
-<!--
-
--->
