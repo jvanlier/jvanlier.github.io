@@ -6,9 +6,9 @@ categories: blog
 math: true
 ---
 
-I lost some weight recently by eating a bit less. I tracked my weight and food intake with MyFitnessPal over a 3 month period and tried to hit a fixed caloric deficit, such that weight loss would be -0.5 kg / week. In order to set a caloric target with such a deficit, one needs to know first how much is burned on a daily basis: the Total Daily Energy Expenditure (TDEE). The way this is calculated in tools such as MyFitnessPal is as follows: calculate Basal Metabolic Rate (BMR) and multiply that by an activity level, typically 1.2 (couch potato) to 1.5 (highly active). It basically acts as a fudge factor — a term I will be using hereon out.
+I lost some weight recently. I tracked my weight and food intake with MyFitnessPal over a 3 month period and tried to hit a fixed caloric deficit, such that weight loss would be -0.5 kg / week. In order to set the caloric target, one needs to know first how much is burned on a daily basis: the Total Daily Energy Expenditure (TDEE). The way this is calculated in tools such as MyFitnessPal is as follows: calculate Basal Metabolic Rate (BMR) and multiply that by an activity level, typically 1.2 (couch potato) to 1.5 (highly active). It basically acts as a fudge factor.
 
-I figured: instead of using an estimated self-reported fudge factor, why not infer it from data? Start with a best guess, then make small corrections to get closer to the desired -0.5 kg / week. This idea is not new, of course, but I haven't seen it done by accounting for uncertainty. Of which there is a lot: body weight measurements fluctuate from day to day, self-reported calories are often inaccurate and incomplete, etc. Uncertainty is useful, because it will allow me to be conservative if there is a large uncertainty. This could prevent undesired muscle loss.
+I figured: instead of using an estimated self-reported fudge factor, why not infer it from data? This idea is not new, of course, but I haven't seen it done by accounting for uncertainty in the measurements and propagating that to the fudge factor.
 
 ```python
 import glob
@@ -126,6 +126,7 @@ The workouts themselves weren't very intense (lifting weights) so for simplicity
 
 If you look more closely, you'll note that there are 3 short periods with no data (March 31-Apr 3, 3-10 May and 18-21 May).
 
+Let's take a look at the relationship between daily weight change and caloric intake:
 
 ```python
 df = (mfp_daily[['cals']]
@@ -247,7 +248,7 @@ If you remember that the fudge factor gets multiplied by the BMR to calculate TD
 
 $\displaystyle \text{fudge_factor} = \frac{\text{tdee}}{\text{bmr}}$
 
-Let's apply this not just to daily differences, but to multiple ranges of (consecutive) days. There is bound to be alot of noise in the day-to-day data.
+Let's apply this not just to daily differences, but to multiple ranges of (consecutive) days. There is bound to be alot of noise in the day-to-day data which should be smoothed out when considering multi-day periods.
 
 
 ```python
@@ -325,11 +326,11 @@ Ok... with daily data we get a huge spread in the histogram, and a big differenc
 
 What is a good number of days to pick for the naive TDEE estimate?
 
-Intuitively it makes sense to pick a somewhat long period to smooth out the short-term irregularities. But not too long, because we're losing more and more data as the period gets larger. From 9 days onward, virtually all data from May is dropped because of the gaps in the data.
+Intuitively it makes sense to pick a somewhat long period to smooth out the short-term irregularities. But not too long, because we're losing more and more data as the period increases, which may also hurt the estimate. From 9 days onward, virtually all data from May is dropped because of the gaps in the data.
 
 Most online TDEE calculators default to a period of 1 week, but maybe that's not optimal. But what is?
 
-One way to pick a sensible period, is to figure out how long it takes for the weight loss to materialize. 
+One way to empirically pick a sensible period, is to figure out how long it takes for the weight loss to materialize. 
 We can do that by computing the correlation between an accumulating calory deficit and an accumulating weight change over periods with multiple sizes. Then, we simply choose the period size with the highest correlation. We're using the previously computed TDEE to get an estimate for the deficit here.
 
 
@@ -365,13 +366,13 @@ The correlation is pretty high for daily data, and the p-value is low. The corre
 
 Simply going with daily data seems appropriate, However, as we've seen, the fudge factor histogram for daily data doesn't really allow for a reliable estimate.
 
-There is an interesting peak in the correlation values at 10 days with a relatively low p-value (0.04), so let's use that. This yields a mean of 1.41 and a median of 1.38 for the fudge factor. That sounds reasonable to me. But let's see if we can do this in a nicer way using Bayesian methods. I'm hoping for a good result with the noisy 1-day data, alleviating the need for these period groupings.
+There is an interesting peak in the correlation values at 10 days with a relatively low p-value (0.04), so let's use that. This yields a mean of 1.41 and a median of 1.38 for the fudge factor. That sounds reasonably close to my prior of 1.375. But let's see if we can do this in a nicer way using Bayesian methods. I'm hoping for a good result with the noisy 1-day data, alleviating the need for these period groupings.
 
 # Fire up PyMC
 
-The approach I'm taking here is very simple: I'm creating a linear model to predict cal intake, in which the fudge factor is one of the coefficients. This coeffient is multiplied by the BMR of each day. The other coeffient is the amount of calories in 1 KG of fat, which I'll keep fixed on 7700 as per the literature. This is multiplied by the weight change. There's no intercept (I tried adding one but it stays close to 0 so there's no point).
+The approach I'm taking here is very simple: I'm creating a linear model to predict cal intake, in which the fudge factor is one of the coefficients. This coeffient is multiplied by the BMR of each day. The other coeffient is the amount of calories in 1 KG of fat, which I'll keep fixed on 7700 as per the literature. This is multiplied by the weight change. There's no intercept.
 
-So:
+The equation is:
 
 $\text{cals_in} = \text{weight_change} \times 7700 + \text{fudge_factor} \times \text{BMR}$
 
@@ -379,7 +380,7 @@ For example, to lose 0.1 kg in a day with a BMR of 1800 and a fudge factor of 1.
 
 $-0.1 \times 7700 + 1.375 \times  1800 = 1705$
 
-I'm assuming that the fudge factor is normally distributed, and the amount of calories as well. The standard deviation for calories is tied to the intake: the more I've logged, the higher the uncertainty likely is. The standard deviation = 30% of total for each observation. I think that's a reasonable assumption.
+I'm assuming that the fudge factor is normally distributed, and the amount of calories as well. The standard deviation for calories is tied to the intake: the more I've logged, the higher the uncertainty likely is. I'm assuming the standard deviation to be 30% of the total for each observation.
 
 ## Model with daily data
 
@@ -427,7 +428,7 @@ print("Fudge mean: {:3.2f}. 95% CI: [{:3.2f}, {:3.2f}]"
     Fudge mean: 1.39. 95% CI: [1.32, 1.45]
 
 
-Pretty neat, right? The value we get here now is pretty close to the naive values that we computed earlier for the 10-day period, except we've computed it in a very simple way on the noisy daily data.
+Pretty neat, right? The value we get here is close to the naive values that we computed earlier for the 10-day period, except we've computed it in a very simple way on the noisy daily data.
 
 We can also apply the fudge factor posterior to the BMR and find a plausible range for my TDEE:
 
@@ -500,5 +501,6 @@ Based on these results, I see no reason to go through the trouble of grouping th
 
 # Conclusion
 
-I've shown that we can use noisy daily weight loss & calory intake data to estimate a fudge factor (activity multiplier) and TDEE. The daily data can be inserted pretty much directly into the MCMC sampling procedure without much preprocessing. And the output is not just a point estimate, but an entire range of possiblities.
+I've shown three methods to use incomplete and noisy daily weight loss & caloric intake data to estimate a fudge factor (activity multiplier) to compute a TDEE from a BMR. The naive approach works, but requires a lot of preprocessing to group consecutive periods. 
 
+Instead, one can also simply insert the daily data into the MCMC sampling procedure, skip the preprocessing, and recover a similar estimate. With the additional benefit that we get the entire range of plausible values. 
