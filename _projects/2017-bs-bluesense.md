@@ -2,6 +2,7 @@
 title:  "BlueSense"
 industry: Facility Management, Retail, Public Transport, Events (soccer, music, trade fairs)
 tech: Python, Java, MongoDB, Kafka, Spark, Hadoop, HDFS, Hive, Storm
+client: KPMG
 from:  2014-01-02 00:00:00 +0000
 to: 2017-06-10 00:00:00 +0000
 ---
@@ -26,11 +27,9 @@ It was an amazing and sometimes nerve-wrecking experience. BlueSense has been in
 Since this project pivoted multiple times, featured subprojects are handled separately:
 
 - [Retail Customer Flow][flow]
-- [Employee Graph Analysis][graph]
 - Workplace Occupancy Monitoring - coming soon!
 - Retail Customer Analytics - coming soon!
 - Real-Time Crowd Prediction - coming soon!
 - Indoor Navigation App - coming soon!
 
 [flow]: {{ site.baseurl }}{% link _projects/2017-bs-retail-customer-flow.md %}
-[graph]: {{ site.baseurl }}{% link _projects/2017-bs-employee-graph-analysis.md %}

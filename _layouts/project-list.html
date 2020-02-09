@@ -2,27 +2,39 @@
 layout: default
 ---
 <h1 class="post-title">{{ page.title | escape }}</h1>
-<div class="row" style="margin-top: 60px">
     {% assign sortedProjects = site.projects | sort: 'to' %}
+    {% assign i = 0 %}
     {% for item in sortedProjects reversed %}
-        {% assign yearFrom = item.from | date: "%Y" %}
-        {% assign yearTo = item.to | date: "%Y" %}
-        <div class="col-md-4">
-            <a href="{{ item.url | relative_url }}" class="project-block">
+        {% assign timeFrom = item.from | date: "%b-%Y" %}
+        {% assign timeTo = item.to | date: "%b-%Y" %}
 
-                <div class="project-block-title">
-                    {{ item.title }}
-                    <small>({{ yearFrom }}{% if yearFrom != yearTo %}-{{ yearTo }}{% endif %})</small>
-                </div>
-
-                <div class="project-block-image"
-                     style="background-image: url('/assets/img/{{ item.id }}-thumb.png')">
-                </div>
-
-
-
-
-            </a>
-        </div>
+	<div class="row" style="margin-top: 4px">
+	    <div class="col-md-1 col-xs-1"; style="text-align: center">
+                <a href="#">[+]</a> 
+     	    </div>
+	    <div class="col-md-7 col-xs-7">
+	        <strong>{{ item.title }}</strong>
+		<br/>
+		{{ item.client }}
+	    </div>
+	    <div class="col-md-4 col-xs-4" style="text-align: right">
+	    	{{ timeFrom }}
+		{% if timeFrom != timeTo %} &ndash; {{ timeTo }}{% endif %}
+	    </div>
+	</div>
+	<div class="row" style="margin-bottom: 10px">
+	    <div class="col-md-12"> 
+                <div id="details-{{ i }}" style="margin: 4px; padding: 4px; border: solid 1px #CCC; display: none">
+	            {{ item.content }}
+	            <small><a href="javascript: toggle()">hide</a></small>
+	        </div>
+	    </div>
+	</div>
+	<hr/>
+	{% assign i = i | plus: 1 %}
     {% endfor %}
-</div>
+
+
+<!--
+
+-->

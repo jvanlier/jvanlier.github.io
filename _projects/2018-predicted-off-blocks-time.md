@@ -1,6 +1,6 @@
 ---
 title:  "Predicted Off Blocks Time"
-industry: Aviation
+client: Schiphol
 tech: > 
   Python (pandas, numpy, scikit-learn, matplotlib), Jupyter, SQL, Hive, Spark, Databricks.
 methods: random forest regressor, boosted trees (XGBoost), Lime and SHAP 

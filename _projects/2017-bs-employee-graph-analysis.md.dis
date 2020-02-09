@@ -1,6 +1,6 @@
 ---
-title:  "Employee Graph Analysis"
-industry: Offices, Facility Management
+title:  "BlueSense: Employee Graph Analysis"
+client: KPMG
 tech: Spark, Hive, Python, Gephi
 methods: Graph construction, Jaccard index, ForceAtlas2, Modularity (Network Science)
 from:  2017-06-30 00:00:00 +0200

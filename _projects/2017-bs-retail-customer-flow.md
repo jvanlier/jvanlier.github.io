@@ -1,6 +1,6 @@
 ---
-title:  "Retail Customer Flow"
-industry: Retail
+title:  "BlueSense: Retail Customer Flow"
+client: Large retailer via KPMG
 tech: Python (pandas, matplotlib), Java
 methods: Smoothing, Kalman filter
 from:  2016-12-01 00:00:00 +0000
