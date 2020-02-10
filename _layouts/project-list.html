@@ -1,28 +1,28 @@
 ---
 layout: default
 ---
+
 <h1 class="post-title">{{ page.title | escape }}</h1>
-<div class="row" style="margin-top: 60px">
-    {% assign sortedProjects = site.projects | sort: 'to' %}
+
+<ul class="timeline">
+{% assign sortedProjects = site.projects | sort: 'to' %}
     {% for item in sortedProjects reversed %}
-        {% assign yearFrom = item.from | date: "%Y" %}
-        {% assign yearTo = item.to | date: "%Y" %}
-        <div class="col-md-4">
-            <a href="{{ item.url | relative_url }}" class="project-block">
-
-                <div class="project-block-title">
-                    {{ item.title }}
-                    <small>({{ yearFrom }}{% if yearFrom != yearTo %}-{{ yearTo }}{% endif %})</small>
+        {% assign timeFrom = item.from | date: "%b-%Y" %}
+        {% assign timeTo = item.to | date: "%b-%Y" %}
+            <li>
+                <strong>{{ item.title }}</strong>
+                <span style="float: right">
+                    {{ timeFrom }}
+                    {% if timeFrom != timeTo %} &ndash; {{ timeTo }}{% endif %}
+                </span>
+                <div style="margin-bottom: 8px">{{ item.client }}</div>
+                <div>
+                    {{ item.content }}
                 </div>
-
-                <div class="project-block-image"
-                     style="background-image: url('/assets/img/{{ item.id }}-thumb.png')">
+                <div style="color: #0155A3; font-size: 90%">
+                    <strong>Tech:</strong> {{ item.tech }}
                 </div>
-
-
-
-
-            </a>
-        </div>
+            </li>
     {% endfor %}
-</div>
+</ul>
+
