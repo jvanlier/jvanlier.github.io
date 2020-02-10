@@ -15,12 +15,12 @@ layout: default
                     {{ timeFrom }}
                     {% if timeFrom != timeTo %} &ndash; {{ timeTo }}{% endif %}
                 </span>
-                <div style="margin-bottom: 4px">{{ item.client }}</div>
+                <div style="margin-bottom: 8px">{{ item.client }}</div>
                 <div>
                     {{ item.content }}
                 </div>
                 <div style="color: #0155A3; font-size: 90%">
-                    Tech: {{ item.tech }}
+                    <strong>Tech:</strong> {{ item.tech }}
                 </div>
             </li>
     {% endfor %}
