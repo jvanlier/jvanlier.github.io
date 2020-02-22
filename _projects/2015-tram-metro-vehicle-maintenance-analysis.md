@@ -10,5 +10,4 @@ to: 2015-11-01 00:00:00 +0200
 Public transport providers maintain expensive assets and malfunctions on the track can be quite disruptive to their travelers
 and society as a whole. If maintenance can be done earlier (preventing breakdowns) or more efficiently, this can translate into many euros saved.
 
-I investigated how patterns in vehicle (sensor) data relate to vehicle maintenance records. This uncovered interesting facts, such as
-specific areas of the tram network that are more likely to cause wheel damage than others.
+I investigated how patterns in vehicle (sensor) data relate to vehicle maintenance records. This uncovered interesting insights, such as specific areas of the rail that cause significantly more wheel damage.

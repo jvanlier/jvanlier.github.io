@@ -7,6 +7,7 @@ tech: >
 from:  2017-10-01 00:00:00 +0200
 to: 2018-07-01 00:00:00 +0200
 ---
-Schiphol has experienced tremendous growth during the last couple of years, and infrastructure has struggled to keep up. The invitable result is increased delays. I set out to develop a model to predict delay and - in the process - try to get a better understanding of the factors that drive delays. 
+Schiphol has experienced tremendous growth during the last couple of years, and infrastructure has struggled to keep up. The inevitable result is increased delays. I set out to develop a model to predict delay and - in the process - try to get a better understanding of the factors that drive delays. 
 
-I settled on boosted tree regression model (XGBoost) with a ton of feature engineering to extract maximum value out of historic data. The model improved existing estimates of departure time by 15% to 50% and supported explanations through LIME and SHAP to facilitate business acceptance. During the process, I learned that the airport does not have enough data about the progress of the turnaround process to make a really great prediction. This led to the Deep Turnaround project (see above).
+To maximize predictive accuracy, I used a boosted tree regression model with a ton of feature engineering. The model improved existing estimates of departure time by 15% to 50%. Interpretability suffered, of course, but part of it could be recovered using LIME and SHAP. 
+Unfortunately, it became apparent that the airport did not have enough data about the progress of the turnaround process to make a really great prediction. This led to the Deep Turnaround project (see above).
