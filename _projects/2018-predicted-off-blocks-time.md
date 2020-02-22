@@ -1,5 +1,5 @@
 ---
-title:  "Departure Delay Prediction (Predicted Off Blocks Time)"
+title: "Predicted Off-Block Time (Departure Delay Prediction)"
 client: Amsterdam Airport Schiphol
 tech: > 
   Python (pandas, numpy, scikit-learn, matplotlib), Jupyter, SQL, Hive, Spark, Databricks.
