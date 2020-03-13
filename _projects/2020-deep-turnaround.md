@@ -3,7 +3,7 @@ title:  "Deep Turnaround"
 client: Amsterdam Airport Schiphol
 tech: > 
   Python (pandas, numpy, keras, matplotlib, seaborn, click, OpenCV), TensorFlow, TensorFlow Object Detection API, TensorBoard,
-  CNNs / ConvNets, Object Detection, YOLO, SSD, Faster R-CNN, ResNets, Video Activity Recognition, Inception-based architectures, multi-task learning, Locality Similarity Hashing, Kalman filter tracking, Airflow, MLflow, Linux
+  CNNs / ConvNets, Object Detection, YOLO, SSD, Faster R-CNN, ResNets, Video Activity Recognition, Inception-based architectures, multi-task learning, Locality Similarity Hashing, Kalman filter tracking, Airflow, MLflow, Linux, Azure
 from: 2018-08-01 00:00:00 +0200 
 to: 2020-04-01 00:00:00 +0200
 ---
