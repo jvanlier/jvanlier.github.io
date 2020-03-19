@@ -5,7 +5,7 @@ tech: >
   Python (pandas, numpy, keras, matplotlib, seaborn, click, OpenCV), TensorFlow, TensorFlow Object Detection API, TensorBoard,
   CNNs / ConvNets, Object Detection, YOLO, SSD, Faster R-CNN, ResNets, Video Activity Recognition, Inception-based architectures, multi-task learning, Locality Similarity Hashing, Kalman filter tracking, Airflow, MLflow, Linux, Azure
 from: 2018-08-01 00:00:00 +0200 
-to: 2020-04-01 00:00:00 +0200
+to: 2020-03-31 00:00:00 +0200
 ---
 In a prior project to predict departure delays, it became apparent that the airport does not know as much as it could when it comes to the turnaround process. 
 We took a bold move and decided to acquire the data ourselves. This became known as the "Deep Turnaround" project: an initiative to detect events during the aircraft turnaround process using state of the art deep learning-based computer vision techniques.
