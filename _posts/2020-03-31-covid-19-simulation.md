@@ -4,6 +4,7 @@ title:  "Covid-19 spread simulation in The Netherlands"
 date:   2020-03-31 14:00:00 +02:00
 categories: blog
 math: false
+permalink: covid-19-simulation
 ---
 This is a simulation of Covid-19 spread in the Netherlands around Schiphol airport. It simulates arriving flights with (a few) infected residents arriving at Schiphol airport and then returning home, where they proceed to infect others. This simulation is *not* based on pre-existing epidemiological models such as SIR. Instead, it has been built up from first principles, and a whole bunch of simplifying assumptions.
 
@@ -40,27 +41,27 @@ Let's start by listing all the ways the simulation is incorrect:
 
 - Nobody who is currently in the country is sick on the beginning of day 0.
 - Infected residents arrive only by aircraft, starting from day 0.
-- The fraction of the population returning per day is crudely estimated to be 0.001 using Schiphol's flight data for February 2020  (encoded in `fraction_of_populace_returning_per_day`) [1].
+- The fraction of the population returning per day is crudely estimated to be 0.001 using Schiphol's flight data for February 2020  (encoded in `fraction_of_populace_returning_per_day`) <1>.
 - The fraction of those residents being infected is assumed to be to 0.01 (encoded in `fraction_returning_travelers_infected`). This remains fixed throughout the timeline (until travel restrictions come into effect: then it drops to 0).
 - The population of The Netherlands is reduced to contain only neighbourhoods in close proximity to the airport (encoded in `max_distance_from_airport_km`).
 - Arriving residents are randomly chosen out of the entire (nearby) population (uniformly). This determines where they live, and therefore where they will proceed to spread the virus.
-- People will only infect others within their own neighbourhood [2].
-- Incubation period is 5 days (encoded in `incubation_period_days`) [3].
+- People will only infect others within their own neighbourhood <2>.
+- Incubation period is 5 days (encoded in `incubation_period_days`) <3>.
 - People are sick and contagious for 14 days (encoded in `days_sick`).
 - Each person will infect 2.5 others on average as long as no measures are put in place (encoded in `avg_num_others_infected`). 
-- Social distancing assumes a reduction of 40% to 1.5 (encoded in `avg_num_others_infected_with_social_distancing`) [4].
+- Social distancing assumes a reduction of 40% to 1.5 (encoded in `avg_num_others_infected_with_social_distancing`) <4>.
 - People will be immune after having been sick (if they survived).
-- 97.5% probability of surviving (encoded in `prob_survive`) [5].
+- 97.5% probability of surviving (encoded in `prob_survive`) <5>.
 
-[1]: The fraction of the populace returning per day was estimated by counting the number of non-transfer arriving passengers, after accounting for *assumed* tourism numbers (50 %), hidden transfers (separately booked flights; 10 %) and repeat business travel (10 %). This leaves 16.000 residents returning every day, or about 0.1 % of the entire population.
+<1>: The fraction of the populace returning per day was estimated by counting the number of non-transfer arriving passengers, after accounting for *assumed* tourism numbers (50 %), hidden transfers (separately booked flights; 10 %) and repeat business travel (10 %). This leaves 16.000 residents returning every day, or about 0.1 % of the entire population.
 
-[2]: Only being able to infect others in the same neighbourhood is probably too restrictive and could be changed to either the entire municipality or a radius in a future version.
+<2>: Only being able to infect others in the same neighbourhood is probably too restrictive and could be changed to either the entire municipality or a radius in a future version.
 
-[3]: Source for incubation period: [The Incubation Period of Coronavirus Disease 2019 (COVID-19) From Publicly Reported Confirmed Cases: Estimation and Application by Stephen A. Lauer et al.](https://annals.org/aim/fullarticle/2762808/incubation-period-coronavirus-disease-2019-covid-19-from-publicly-reported).
+<3>: Source for incubation period: [The Incubation Period of Coronavirus Disease 2019 (COVID-19) From Publicly Reported Confirmed Cases: Estimation and Application by Stephen A. Lauer et al.](https://annals.org/aim/fullarticle/2762808/incubation-period-coronavirus-disease-2019-covid-19-from-publicly-reported).
 
-[4]: 1.5 is probably still on the high side; reports from the Dutch RIVM indicate that it dropped to 1 or lower in late March.
+<4>: 1.5 is probably still on the high side; reports from the Dutch RIVM indicate that it dropped to 1 or lower in late March.
 
-[5]: This is a drastic oversimplification of survival rate: it should be conditioned on the available capacity in hospitals. We've seen that survival rate drops as hospitals reach capacity. Hence, please don't take my casualty numbers too seriously.
+<5>: This is a drastic oversimplification of survival rate: it should be conditioned on the available capacity in hospitals. We've seen that survival rate drops as hospitals reach capacity. Hence, please don't take my casualty numbers too seriously.
 
 
 ```python
@@ -530,6 +531,7 @@ run(storage)
 ```
 
 
+    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -540,11 +542,11 @@ run(storage)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_21_2.png)
+![png](/assets/img/blog/covid-19-simulation/post_21_2.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_21_3.png)
+![png](/assets/img/blog/covid-19-simulation/post_21_3.png)
 
 
 
@@ -553,6 +555,7 @@ run(storage, travel_restriction_day=0)
 ```
 
 
+    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -563,11 +566,11 @@ run(storage, travel_restriction_day=0)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_22_2.png)
+![png](/assets/img/blog/covid-19-simulation/post_22_2.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_22_3.png)
+![png](/assets/img/blog/covid-19-simulation/post_22_3.png)
 
 
 
@@ -576,6 +579,7 @@ run(storage, travel_restriction_day=3)
 ```
 
 
+    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -586,11 +590,11 @@ run(storage, travel_restriction_day=3)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_23_2.png)
+![png](/assets/img/blog/covid-19-simulation/post_23_2.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_23_3.png)
+![png](/assets/img/blog/covid-19-simulation/post_23_3.png)
 
 
 
@@ -599,6 +603,7 @@ run(storage, travel_restriction_day=10)
 ```
 
 
+    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -609,11 +614,11 @@ run(storage, travel_restriction_day=10)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_24_2.png)
+![png](/assets/img/blog/covid-19-simulation/post_24_2.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_24_3.png)
+![png](/assets/img/blog/covid-19-simulation/post_24_3.png)
 
 
 The benefits of air travel restriction taper off quickly. It doesn't seem to help slow the virus down in a meaningful way if it has already taken hold in the country, unless it is done infeasibily early.
@@ -626,6 +631,7 @@ run(storage, travel_restriction_day=50)
 ```
 
 
+    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -636,11 +642,11 @@ run(storage, travel_restriction_day=50)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_26_2.png)
+![png](/assets/img/blog/covid-19-simulation/post_26_2.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_26_3.png)
+![png](/assets/img/blog/covid-19-simulation/post_26_3.png)
 
 
 Yes, that's definitely too late to have a meaningful impact on slowing it down.
@@ -655,6 +661,7 @@ run(storage, social_distancing_day=40)
 ```
 
 
+    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -665,11 +672,11 @@ run(storage, social_distancing_day=40)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_29_2.png)
+![png](/assets/img/blog/covid-19-simulation/post_29_2.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_29_3.png)
+![png](/assets/img/blog/covid-19-simulation/post_29_3.png)
 
 
 That's fantastic! Ok, what if we would have been a little later?
@@ -680,6 +687,7 @@ run(storage, social_distancing_day=60)
 ```
 
 
+    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -690,11 +698,11 @@ run(storage, social_distancing_day=60)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_31_2.png)
+![png](/assets/img/blog/covid-19-simulation/post_31_2.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_31_3.png)
+![png](/assets/img/blog/covid-19-simulation/post_31_3.png)
 
 
 Still quite good.
@@ -705,6 +713,7 @@ run(storage, social_distancing_day=80)
 ```
 
 
+    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -715,11 +724,11 @@ run(storage, social_distancing_day=80)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_33_2.png)
+![png](/assets/img/blog/covid-19-simulation/post_33_2.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_33_3.png)
+![png](/assets/img/blog/covid-19-simulation/post_33_3.png)
 
 
 Even when applied as late as day 80, there remains a significant positive impact.
@@ -734,6 +743,7 @@ run(storage, social_distancing_day=40, travel_restriction_day=50)
 ```
 
 
+    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -744,11 +754,11 @@ run(storage, social_distancing_day=40, travel_restriction_day=50)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_36_2.png)
+![png](/assets/img/blog/covid-19-simulation/post_36_2.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_36_3.png)
+![png](/assets/img/blog/covid-19-simulation/post_36_3.png)
 
 
 This is slightly better than the scenario with *only* social distancing: all three percentages (deceased, peak infected, total affected) are down.
@@ -880,11 +890,11 @@ storage["SimulationResult(n_days=250, tr_day=50, sd_day=40)"].plot_count_curves(
 ```
 
 
-![png](/assets/img/blog/covid19-simulation/post_41_0.png)
+![png](/assets/img/blog/covid-19-simulation/post_41_0.png)
 
 
 
-![png](/assets/img/blog/covid19-simulation/post_41_1.png)
+![png](/assets/img/blog/covid-19-simulation/post_41_1.png)
 
 
 That's much better if you ask me!
