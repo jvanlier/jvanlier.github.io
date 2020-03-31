@@ -901,4 +901,4 @@ In this limited and not-at-all realistic simulation, restricting air travel has 
 An important caveat to all this: simulations that involve exponential growth can be finnicky. Things may turn out very different with small changes to initial conditions or assumptions. If, say, the percentage of infected travelers is much higher, or increases over time, I'm sure the effect of restricting air travel would be more pronounced.
 
 Well, this was informative! Next step for me is to use this rich geographic data to do some mapping with Kepler.gl. Stay tuned.
-Code can be found here: [GitHub](https://github.com/jvanlier/blog-notebooks/tree/master/covid19-simulation).
+Code can be found here: [GitHub](https://github.com/jvanlier/blog-notebooks/tree/master/covid-19-simulation).
