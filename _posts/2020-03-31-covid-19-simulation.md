@@ -531,7 +531,6 @@ run(storage)
 ```
 
 
-    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -555,7 +554,6 @@ run(storage, travel_restriction_day=0)
 ```
 
 
-    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -579,7 +577,6 @@ run(storage, travel_restriction_day=3)
 ```
 
 
-    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -603,7 +600,6 @@ run(storage, travel_restriction_day=10)
 ```
 
 
-    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -631,7 +627,6 @@ run(storage, travel_restriction_day=50)
 ```
 
 
-    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -661,7 +656,6 @@ run(storage, social_distancing_day=40)
 ```
 
 
-    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -687,7 +681,6 @@ run(storage, social_distancing_day=60)
 ```
 
 
-    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -713,7 +706,6 @@ run(storage, social_distancing_day=80)
 ```
 
 
-    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
@@ -743,7 +735,6 @@ run(storage, social_distancing_day=40, travel_restriction_day=50)
 ```
 
 
-    HBox(children=(FloatProgress(value=0.0, max=250.0), HTML(value='')))
 
 
     
