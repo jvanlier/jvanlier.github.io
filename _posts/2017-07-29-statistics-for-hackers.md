@@ -1,11 +1,10 @@
 ---
 layout: post
-title:  "Practical Statistics for Coders - Part One"
+title:  "Statistics for Hackers"
 date:   2017-07-29 14:00:00 +0200
 categories: blog
 math: true
 ---
-
 Inspired by Jake VanderPlas' talk titled [Statistics for Hackers](https://www.youtube.com/watch?v=Iq9DzN6mvYA) and John Rauser's talk [Statistics Without the Agonizing Pain](https://www.youtube.com/watch?v=5Dnw46eC-0o), I thought I'd explore the idea a bit further with a Python-first approach. The central thesis of these talks is: if you can code, you can do statistics. 
 
 This made me think about when I first got into statistics a few years ago. I went through the free [OpenIntro Statistics eBook](https://www.openintro.org/stat/) (second edition at the time). It’s a very accessible book, but some things are a bit… let’s say, traditional. Like having to learn a whole list of rules and formulas, looking up values in frequency tables, etc. If you have access to a computer and can write a for loop (or a list comprehension), statistics can actually be much simpler than what these books may lead you to believe. 
@@ -51,7 +50,7 @@ print("{} times out of {} we observed {} heads or more"
       .format(num_n_heads_or_more, n_simulations, n_heads))
 ```
 
-    2164 times out of 100000 we observed 15 heads or more
+    1971 times out of 100000 we observed 15 heads or more
 
 
 Let's see what this looks like:
@@ -67,7 +66,7 @@ plt.xlabel("Amount of heads"); plt.ylabel("count");
 ```
 
 
-![png](/assets/img/practical-statistics-for-coders-part-one/practical-statistics-for-coders-part-one_5_0.png)
+![png](/assets/img/blog/2017-07-29-statistics-for-hackers/post_6_0.png)
 
 
 The fraction of times that you saw 15 heads or more is what's called a p-value! This is the probability to observe the result of your experiment, or something more extreme than that, if the coin is unbiased (if $H_0$ is true).
@@ -164,7 +163,7 @@ plt.xlabel("height [cm]"); plt.ylabel("count");
 ```
 
 
-![png](/assets/img/practical-statistics-for-coders-part-one/practical-statistics-for-coders-part-one_16_0.png)
+![png](/assets/img/blog/2017-07-29-statistics-for-hackers/post_17_0.png)
 
 
 
@@ -197,7 +196,7 @@ plt.xlabel("height [cm]"); plt.ylabel("count");
 ```
 
 
-![png](/assets/img/practical-statistics-for-coders-part-one/practical-statistics-for-coders-part-one_19_0.png)
+![png](/assets/img/blog/2017-07-29-statistics-for-hackers/post_20_0.png)
 
 
 Notice that this distribution is much narrower. 
@@ -238,7 +237,7 @@ The Z-score is: $\displaystyle \frac{167.827 - 165}{2} = 1.414$
 
 Looking this up in a table yields 0.9207:
 
-![Z-table](/assets/img/practical-statistics-for-coders-part-one/z_table.png)
+![Z-table](/assets/img/blog/2017-07-29-statistics-for-hackers/z_table.png)
 
 Now you have to remember that this is the area on the left side. So 1 - 0.9207 = 0.0793 is our p-value. Which is close enough to the simulation.
 

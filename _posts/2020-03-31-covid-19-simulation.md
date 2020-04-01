@@ -541,11 +541,11 @@ run(storage)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_21_2.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_21_2.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_21_3.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_21_3.png)
 
 
 
@@ -564,11 +564,11 @@ run(storage, travel_restriction_day=0)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_22_2.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_22_2.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_22_3.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_22_3.png)
 
 
 
@@ -587,11 +587,11 @@ run(storage, travel_restriction_day=3)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_23_2.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_23_2.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_23_3.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_23_3.png)
 
 
 
@@ -610,11 +610,11 @@ run(storage, travel_restriction_day=10)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_24_2.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_24_2.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_24_3.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_24_3.png)
 
 
 The benefits of air travel restriction taper off quickly. It doesn't seem to help slow the virus down in a meaningful way if it has already taken hold in the country, unless it is done infeasibily early.
@@ -637,11 +637,11 @@ run(storage, travel_restriction_day=50)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_26_2.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_26_2.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_26_3.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_26_3.png)
 
 
 Yes, that's definitely too late to have a meaningful impact on slowing it down.
@@ -666,11 +666,11 @@ run(storage, social_distancing_day=40)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_29_2.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_29_2.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_29_3.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_29_3.png)
 
 
 That's fantastic! Ok, what if we would have been a little later?
@@ -691,11 +691,11 @@ run(storage, social_distancing_day=60)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_31_2.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_31_2.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_31_3.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_31_3.png)
 
 
 Still quite good.
@@ -716,11 +716,11 @@ run(storage, social_distancing_day=80)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_33_2.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_33_2.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_33_3.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_33_3.png)
 
 
 Even when applied as late as day 80, there remains a significant positive impact.
@@ -745,11 +745,11 @@ run(storage, social_distancing_day=40, travel_restriction_day=50)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_36_2.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_36_2.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_36_3.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_36_3.png)
 
 
 This is slightly better than the scenario with *only* social distancing: all three percentages (deceased, peak infected, total affected) are down.
@@ -881,11 +881,11 @@ storage["SimulationResult(n_days=250, tr_day=50, sd_day=40)"].plot_count_curves(
 ```
 
 
-![png](/assets/img/blog/covid-19-simulation/post_41_0.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_41_0.png)
 
 
 
-![png](/assets/img/blog/covid-19-simulation/post_41_1.png)
+![png](/assets/img/blog/2020-03-31-covid-19-simulation/post_41_1.png)
 
 
 That's much better if you ask me!

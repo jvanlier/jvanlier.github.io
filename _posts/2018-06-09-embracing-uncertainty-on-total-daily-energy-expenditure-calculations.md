@@ -5,10 +5,10 @@ date:   2018-06-09 17:00:00 +0200
 categories: blog
 math: true
 ---
-
 I lost some weight recently. I tracked my weight and food intake with MyFitnessPal over a 3 month period and tried to hit a fixed caloric deficit, such that weight loss would be -0.5 kg / week. In order to set the caloric target, one needs to know first how much is burned on a daily basis: the Total Daily Energy Expenditure (TDEE). The way this is calculated in tools such as MyFitnessPal is as follows: calculate Basal Metabolic Rate (BMR) and multiply that by an activity level, typically 1.2 (couch potato) to 1.5 (highly active). It basically acts as a fudge factor.
 
-I figured: instead of using an estimated self-reported fudge factor, why not infer it from data? This idea is not new, of course, but I haven't seen it done by accounting for uncertainty in the measurements and propagating that to the fudge factor.
+I figured: instead of using an estimated self-reported fudge factor, why not infer it from data? This idea is not new, of course, but I haven’t seen it done by accounting for uncertainty in the measurements and propagating that to the fudge factor.
+
 
 ```python
 import glob
@@ -89,7 +89,7 @@ plt.show()
 
 
 
-![png](/assets/img/embracing-uncertainty-on-total-daily-energy-expenditure-calculations/embracing-uncertainty-on-total-daily-energy-expenditure-calculations_4_1.png)
+![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_5_1.png)
 
 
 ### Load cal intake from MyFitnessPal exports
@@ -117,16 +117,17 @@ mfp_daily.plot(y='cals', figsize=(14, 5), grid=True, kind='bar', color='C0');
 ```
 
 
-![png](/assets/img/embracing-uncertainty-on-total-daily-energy-expenditure-calculations/embracing-uncertainty-on-total-daily-energy-expenditure-calculations_6_0.png)
+![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_7_0.png)
 
 
-The first thing that jumps out here is the big difference between subsequent days. This might seem like poor diet adherence, but actually it's pretty good. Instead of using the same deficit every day, I've actually been cycling calories between workout and rest days, eating more on workout days than on rest days. Ok, I admit, 2018-04-14 and 2018-05-02 were pretty bad. 
+The first thing that jumps out here is the big difference between subsequent days. This might seem like poor diet adherence, but actually it’s pretty good. Instead of using the same deficit every day, I’ve actually been cycling calories between workout and rest days, eating more on workout days than on rest days. Ok, I admit, 2018-04-14 and 2018-05-02 were pretty bad.
 
-The workouts themselves weren't very intense (lifting weights) so for simplicity purposes I'm ignoring calory burn through exercise (it's no more than 100 cals per workout day).
+The workouts themselves weren’t very intense (lifting weights) so for simplicity purposes I’m ignoring calory burn through exercise (it’s no more than 100 cals per workout day).
 
-If you look more closely, you'll note that there are 3 short periods with no data (March 31-Apr 3, 3-10 May and 18-21 May).
+If you look more closely, you’ll note that there are 3 short periods with no data (March 31-Apr 3, 3-10 May and 18-21 May).
 
-Let's take a look at the relationship between daily weight change and caloric intake:
+Let’s take a look at the relationship between daily weight change and caloric intake:
+
 
 ```python
 df = (mfp_daily[['cals']]
@@ -226,8 +227,14 @@ sns.jointplot(df['weight_chg'], df['cals'], kind='reg')
 plt.grid()
 ```
 
+    /Users/jvlier/anaconda3/lib/python3.6/site-packages/matplotlib/axes/_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
+      warnings.warn("The 'normed' kwarg is deprecated, and has been "
+    /Users/jvlier/anaconda3/lib/python3.6/site-packages/matplotlib/axes/_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
+      warnings.warn("The 'normed' kwarg is deprecated, and has been "
 
-![png](/assets/img/embracing-uncertainty-on-total-daily-energy-expenditure-calculations/embracing-uncertainty-on-total-daily-energy-expenditure-calculations_9_1.png)
+
+
+![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_10_1.png)
 
 
 Although noisy, there seems to be some sort of relationship between daily cal intake and daily weight change.
@@ -248,7 +255,7 @@ If you remember that the fudge factor gets multiplied by the BMR to calculate TD
 
 $\displaystyle \text{fudge_factor} = \frac{\text{tdee}}{\text{bmr}}$
 
-Let's apply this not just to daily differences, but to multiple ranges of (consecutive) days. There is bound to be alot of noise in the day-to-day data which should be smoothed out when considering multi-day periods.
+Let’s apply this not just to daily differences, but to multiple ranges of (consecutive) days. There is bound to be alot of noise in the day-to-day data which should be smoothed out when considering multi-day periods.
 
 
 ```python
@@ -319,19 +326,19 @@ plt.tight_layout()
 
 
 
-![png](/assets/img/embracing-uncertainty-on-total-daily-energy-expenditure-calculations/embracing-uncertainty-on-total-daily-energy-expenditure-calculations_12_1.png)
+![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_13_1.png)
 
 
-Ok... with daily data we get a huge spread in the histogram, and a big difference between the mean and median, but as we increase the range the histogram gets narrower and the summary statistics seem to want to converge. 
+Ok... with daily data we get a huge spread in the histogram, and a big difference between the mean and median, but as we increase the range the histogram gets narrower and the summary statistics seem to want to converge.
 
 What is a good number of days to pick for the naive TDEE estimate?
 
-Intuitively it makes sense to pick a somewhat long period to smooth out the short-term irregularities. But not too long, because we're losing more and more data as the period increases, which may also hurt the estimate. From 9 days onward, virtually all data from May is dropped because of the gaps in the data.
+Intuitively it makes sense to pick a somewhat long period to smooth out the short-term irregularities. But not too long, because we’re losing more and more data as the period increases, which may also hurt the estimate. From 9 days onward, virtually all data from May is dropped because of the gaps in the data.
 
-Most online TDEE calculators default to a period of 1 week, but maybe that's not optimal. But what is?
+Most online TDEE calculators default to a period of 1 week, but maybe that’s not optimal. But what is?
 
 One way to empirically pick a sensible period, is to figure out how long it takes for the weight loss to materialize. 
-We can do that by computing the correlation between an accumulating calory deficit and an accumulating weight change over periods with multiple sizes. Then, we simply choose the period size with the highest correlation. We're using the previously computed TDEE to get an estimate for the deficit here.
+We can do that by computing the correlation between an accumulating calory deficit and an accumulating weight change over periods with multiple sizes. Then, we simply choose the period size with the highest correlation. We’re using the previously computed TDEE to get an estimate for the deficit here.
 
 
 ```python
@@ -359,18 +366,18 @@ ax.grid()
 ```
 
 
-![png](/assets/img/embracing-uncertainty-on-total-daily-energy-expenditure-calculations/embracing-uncertainty-on-total-daily-energy-expenditure-calculations_15_0.png)
+![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_16_0.png)
 
 
-The correlation is pretty high for daily data, and the p-value is low. The correlation is even higher for periods of 19 days, but I can't say I trust that result given the erratic nature of the p-value line when we exceed 12 days.
+The correlation is pretty high for daily data, and the p-value is low. The correlation is even higher for periods of 19 days, but I can’t say I trust that result given the erratic nature of the p-value line when we exceed 12 days.
 
-Simply going with daily data seems appropriate, However, as we've seen, the fudge factor histogram for daily data doesn't really allow for a reliable estimate.
+Simply going with daily data seems appropriate, However, as we’ve seen, the fudge factor histogram for daily data doesn’t really allow for a reliable estimate.
 
-There is an interesting peak in the correlation values at 10 days with a relatively low p-value (0.04), so let's use that. This yields a mean of 1.41 and a median of 1.38 for the fudge factor. That sounds reasonably close to my prior of 1.375. But let's see if we can do this in a nicer way using Bayesian methods. I'm hoping for a good result with the noisy 1-day data, alleviating the need for these period groupings.
+There is an interesting peak in the correlation values at 10 days with a relatively low p-value (0.04), so let’s use that. This yields a mean of 1.41 and a median of 1.38 for the fudge factor. That sounds reasonably close to my prior of 1.375. But let’s see if we can do this in a nicer way using Bayesian methods. I’m hoping for a good result with the noisy 1-day data, alleviating the need for these period groupings.
 
 # Fire up PyMC
 
-The approach I'm taking here is very simple: I'm creating a linear model to predict cal intake, in which the fudge factor is one of the coefficients. This coeffient is multiplied by the BMR of each day. The other coeffient is the amount of calories in 1 KG of fat, which I'll keep fixed on 7700 as per the literature. This is multiplied by the weight change. There's no intercept.
+The approach I’m taking here is very simple: I’m creating a linear model to predict cal intake, in which the fudge factor is one of the coefficients. This coeffient is multiplied by the BMR of each day. The other coeffient is the amount of calories in 1 KG of fat, which I’ll keep fixed on 7700 as per the literature. This is multiplied by the weight change. There’s no intercept.
 
 The equation is:
 
@@ -380,7 +387,7 @@ For example, to lose 0.1 kg in a day with a BMR of 1800 and a fudge factor of 1.
 
 $-0.1 \times 7700 + 1.375 \times  1800 = 1705$
 
-I'm assuming that the fudge factor is normally distributed, and the amount of calories as well. The standard deviation for calories is tied to the intake: the more I've logged, the higher the uncertainty likely is. I'm assuming the standard deviation to be 30% of the total for each observation.
+I’m assuming that the fudge factor is normally distributed, and the amount of calories as well. The standard deviation for calories is tied to the intake: the more I’ve logged, the higher the uncertainty likely is. I’m assuming the standard deviation to be 30% of the total for each observation.
 
 ## Model with daily data
 
@@ -412,7 +419,7 @@ pm.traceplot(trace);
 
 
 
-![png](/assets/img/embracing-uncertainty-on-total-daily-energy-expenditure-calculations/embracing-uncertainty-on-total-daily-energy-expenditure-calculations_20_1.png)
+![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_21_1.png)
 
 
 Now we can query this posterior to find its mean and a 95% Credible Interval:
@@ -428,7 +435,7 @@ print("Fudge mean: {:3.2f}. 95% CI: [{:3.2f}, {:3.2f}]"
     Fudge mean: 1.39. 95% CI: [1.32, 1.45]
 
 
-Pretty neat, right? The value we get here is close to the naive values that we computed earlier for the 10-day period, except we've computed it in a very simple way on the noisy daily data.
+Pretty neat, right? The value we get here now is pretty close to the naive values that we computed earlier for the 10-day period, except we've computed it in a very simple way on the noisy daily data.
 
 We can also apply the fudge factor posterior to the BMR and find a plausible range for my TDEE:
 
@@ -440,7 +447,7 @@ plt.show()
 ```
 
 
-![png](/assets/img/embracing-uncertainty-on-total-daily-energy-expenditure-calculations/embracing-uncertainty-on-total-daily-energy-expenditure-calculations_24_0.png)
+![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_25_0.png)
 
 
 ## Model with 10-day data
@@ -469,7 +476,7 @@ pm.traceplot(trace);
 
 
 
-![png](/assets/img/embracing-uncertainty-on-total-daily-energy-expenditure-calculations/embracing-uncertainty-on-total-daily-energy-expenditure-calculations_26_1.png)
+![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_27_1.png)
 
 
 
@@ -483,7 +490,7 @@ print("Fudge mean: {:3.2f}. 95% CI: [{:3.2f}, {:3.2f}]"
     Fudge mean: 1.41. 95% CI: [1.31, 1.51]
 
 
-The mean is a little higher here, but still very close to the previous result and it actually agrees with the naive result. Also, there is more uncertainty in the posterior distribution. This is very likely because there's less days available in this 10-day dataset, and so there's less evidence available to refine the posterior:
+The mean is a little higher here, but still very close to the previous result and it actually agrees with the naive result. Also, there is more uncertainty in the posterior distribution. This is very likely because there’s less days available in this 10-day dataset, and so there’s less evidence available to refine the posterior:
 
 
 ```python
@@ -501,6 +508,6 @@ Based on these results, I see no reason to go through the trouble of grouping th
 
 # Conclusion
 
-I've shown three methods to use incomplete and noisy daily weight loss & caloric intake data to estimate a fudge factor (activity multiplier) to compute a TDEE from a BMR. The naive approach works, but requires a lot of preprocessing to group consecutive periods. 
+I’ve shown three methods to use incomplete and noisy daily weight loss & caloric intake data to estimate a fudge factor (activity multiplier) to compute a TDEE from a BMR. The naive approach works, but requires a lot of preprocessing to group consecutive periods.
 
-Instead, one can also simply insert the daily data into the MCMC sampling procedure, skip the preprocessing, and recover a similar estimate. With the additional benefit that we get the entire range of plausible values. 
+Instead, one can also simply insert the daily data into the MCMC sampling procedure, skip the preprocessing, and recover a similar estimate. With the additional benefit that we get the entire range of plausible values.
