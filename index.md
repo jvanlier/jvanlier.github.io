@@ -1,13 +1,11 @@
 ---
 layout: landing
 ---
-All-round Data Scientist / Machine Learning Engineer that enjoys automating the world with Machine Learning and Artificial Intelligence.
+All-round Data Scientist / Machine Learning Engineer that enjoys making things more intelligent and autonomous through Machine Learning and Artificial Intelligence.
 
 Key traits:
-- Nearly 10 years of professional experience.
-- MSc in Computer Science.
-- Substantial expertise in Deep Learning, especially Computer Vision.
-- Strong Python engineering skills.
-- Goal oriented: driven to move challenging projects forward when others get stuck or seem to lose interest.
-- Able to effectively lead a team.
 
+- A strong problem solver with attention to detail; can tackle loosely defined problems.
+- Able to initiate and drive projects to completion with minimal guidance in a fast-paced dynamic environment.
+- Analytical mindset and a passion for improving businesses by leveraging data.
+- Strong communicator, ability to explain things in a simple way to stakeholders, enjoys coaching and educating others. 
