@@ -1,7 +1,7 @@
 ---
 title:  "BlueSense: Indoor Navigation"
 client: "KPMG"
-tech: Java, JUnit, SQLite, Android SDK, iBeacon, Python, Django, Dijkstra's algorithm
+tech: Java, JUnit, SQLite, Android SDK, iBeacon, Python, Django
 from:  2015-12-01 00:00:00 +0200
 to: 2015-12-31 00:00:00 +0200
 ---

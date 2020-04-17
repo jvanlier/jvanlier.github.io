@@ -2,7 +2,9 @@
 title:  "BlueSense: Real-Time Crowd Prediction"
 client: KPMG
 industry: Restaurant
-tech: Python, Java, JavaScript, Apache Storm, Kafka, Hive, MongoDB, cron, time series forecasting. 
+tech: >
+    BlueSense stack (see above),
+    time series forecasting (Machine Learning) 
 from:  2016-01-01 00:00:00 +0200
 to: 2016-03-31 00:00:00 +0200
 ---
