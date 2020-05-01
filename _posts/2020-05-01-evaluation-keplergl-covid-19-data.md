@@ -392,7 +392,7 @@ The timeline feature is activated here. While it looks good, I am already facing
 
 Kepler.gl seems to have been built for unaggregated data that is generated at a random moment in time. Which isn't a complete surprise, since this exactly describes the nature of Uber rides!
 
-But, I have to admit, the playback feature is very nice:/assets/blog/2020-05-01-evaluation-keplergl-covid-19-data/vid
+But, I have to admit, the playback feature is very nice:
 
 
 ```python
