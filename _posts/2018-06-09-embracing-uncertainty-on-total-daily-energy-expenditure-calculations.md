@@ -89,7 +89,7 @@ plt.show()
 
 
 
-![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_5_1.png)
+![png](/assets/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/img_nb/post_5_1.png)
 
 
 ### Load cal intake from MyFitnessPal exports
@@ -117,7 +117,7 @@ mfp_daily.plot(y='cals', figsize=(14, 5), grid=True, kind='bar', color='C0');
 ```
 
 
-![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_7_0.png)
+![png](/assets/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/img_nb/post_7_0.png)
 
 
 The first thing that jumps out here is the big difference between subsequent days. This might seem like poor diet adherence, but actually it’s pretty good. Instead of using the same deficit every day, I’ve actually been cycling calories between workout and rest days, eating more on workout days than on rest days. Ok, I admit, 2018-04-14 and 2018-05-02 were pretty bad.
@@ -234,7 +234,7 @@ plt.grid()
 
 
 
-![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_10_1.png)
+![png](/assets/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/img_nb/post_10_1.png)
 
 
 Although noisy, there seems to be some sort of relationship between daily cal intake and daily weight change.
@@ -326,10 +326,10 @@ plt.tight_layout()
 
 
 
-![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_13_1.png)
+![png](/assets/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/img_nb/post_13_1.png)
 
 
-Ok... with daily data we get a huge spread in the histogram, and a big difference between the mean and median, but as we increase the range the histogram gets narrower and the summary statistics seem to want to converge.
+Ok… with daily data we get a huge spread in the histogram, and a big difference between the mean and median, but as we increase the range the histogram gets narrower and the summary statistics seem to want to converge.
 
 What is a good number of days to pick for the naive TDEE estimate?
 
@@ -337,8 +337,7 @@ Intuitively it makes sense to pick a somewhat long period to smooth out the shor
 
 Most online TDEE calculators default to a period of 1 week, but maybe that’s not optimal. But what is?
 
-One way to empirically pick a sensible period, is to figure out how long it takes for the weight loss to materialize. 
-We can do that by computing the correlation between an accumulating calory deficit and an accumulating weight change over periods with multiple sizes. Then, we simply choose the period size with the highest correlation. We’re using the previously computed TDEE to get an estimate for the deficit here.
+One way to empirically pick a sensible period, is to figure out how long it takes for the weight loss to materialize. We can do that by computing the correlation between an accumulating calory deficit and an accumulating weight change over periods with multiple sizes. Then, we simply choose the period size with the highest correlation. We’re using the previously computed TDEE to get an estimate for the deficit here.
 
 
 ```python
@@ -366,7 +365,7 @@ ax.grid()
 ```
 
 
-![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_16_0.png)
+![png](/assets/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/img_nb/post_16_0.png)
 
 
 The correlation is pretty high for daily data, and the p-value is low. The correlation is even higher for periods of 19 days, but I can’t say I trust that result given the erratic nature of the p-value line when we exceed 12 days.
@@ -419,7 +418,7 @@ pm.traceplot(trace);
 
 
 
-![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_21_1.png)
+![png](/assets/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/img_nb/post_21_1.png)
 
 
 Now we can query this posterior to find its mean and a 95% Credible Interval:
@@ -447,7 +446,7 @@ plt.show()
 ```
 
 
-![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_25_0.png)
+![png](/assets/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/img_nb/post_25_0.png)
 
 
 ## Model with 10-day data
@@ -476,7 +475,7 @@ pm.traceplot(trace);
 
 
 
-![png](/assets/img/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/post_27_1.png)
+![png](/assets/blog/2018-06-09-embracing-uncertainty-on-total-daily-energy-expenditure-calculations/img_nb/post_27_1.png)
 
 
 

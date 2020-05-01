@@ -66,7 +66,7 @@ plt.xlabel("Amount of heads"); plt.ylabel("count");
 ```
 
 
-![png](/assets/img/blog/2017-07-29-statistics-for-hackers/post_6_0.png)
+![png](/assets/blog/2017-07-29-statistics-for-hackers/img_nb/post_6_0.png)
 
 
 The fraction of times that you saw 15 heads or more is what's called a p-value! This is the probability to observe the result of your experiment, or something more extreme than that, if the coin is unbiased (if $H_0$ is true).
@@ -163,7 +163,7 @@ plt.xlabel("height [cm]"); plt.ylabel("count");
 ```
 
 
-![png](/assets/img/blog/2017-07-29-statistics-for-hackers/post_17_0.png)
+![png](/assets/blog/2017-07-29-statistics-for-hackers/img_nb/post_17_0.png)
 
 
 
@@ -196,7 +196,7 @@ plt.xlabel("height [cm]"); plt.ylabel("count");
 ```
 
 
-![png](/assets/img/blog/2017-07-29-statistics-for-hackers/post_20_0.png)
+![png](/assets/blog/2017-07-29-statistics-for-hackers/img_nb/post_20_0.png)
 
 
 Notice that this distribution is much narrower. 
@@ -237,7 +237,7 @@ The Z-score is: $\displaystyle \frac{167.827 - 165}{2} = 1.414$
 
 Looking this up in a table yields 0.9207:
 
-![Z-table](/assets/img/blog/2017-07-29-statistics-for-hackers/z_table.png)
+![Z-table](/assets/blog/2017-07-29-statistics-for-hackers/img/z_table.png)
 
 Now you have to remember that this is the area on the left side. So 1 - 0.9207 = 0.0793 is our p-value. Which is close enough to the simulation.
 
