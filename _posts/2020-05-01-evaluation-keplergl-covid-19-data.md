@@ -3,7 +3,7 @@ layout: post
 title:  "An evaluation of Kepler.gl for Covid-19-style geographic timeseries"
 date:   2020-05-01 14:00:00 +0200
 categories: blog
-permalink: 
+permalink: evaluation-keplergl-covid-19-data
 math: false
 ---
 I'm a big fan of visualizing how things change over time on maps. Previously, this had me plotting ugly maps with matplotlib-based tooling, writing `.jpegs` to a filesystem and combining them to a video or gif with `ffmpeg`. Not an entirely pleasant experience. When I first realised that Uber's [Kepler.gl](https://kepler.gl/) not only looks great, but has built-in time series support as well, it got me pretty excited!
