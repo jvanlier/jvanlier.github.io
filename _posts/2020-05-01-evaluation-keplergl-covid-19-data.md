@@ -570,7 +570,7 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 
 
 
-There is a slight problem here with the color boundaries changing over time. This happens because my dummy triangle in the North Sea is no longer the max, due to summing multiple neighborhoods into a single hex bin. This is where my workaround to normalize across the entire time series breaks down.
+There is a slight problem here with the color boundaries changing over time. This happens because my dummy triangle in the North Sea is no longer the max, due to summing multiple neighbourhoods into a single hex bin. This is where my workaround to normalize across the entire time series breaks down.
 
 A fix isn't trivial, because the binning changes slightly as the map is moved around during playback.
 This is not great from a from a Data Science purism perspective, but it doesn't seem to have much impact here.
