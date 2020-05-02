@@ -3,7 +3,7 @@ title:  "Highway Vehicle Intensity Prediction"
 client: "Ministry of Infrastructure and Environment (<i>Rijkswaterstaat</i>; via KPMG)"
 tech: > 
     Python (pandas, numpy, matplotlib, scikit-learn), Jupyter notebook,
-    Random forest regression, gradient descent, time series prediction, autoregressive feature extraction
+    random forest regressor, gradient descent, time series prediction, autoregressive feature extraction
 from:  2014-06-01 00:00:00 +0200
 to: 2014-08-01 00:00:00 +0200
 ---

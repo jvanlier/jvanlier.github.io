@@ -1,7 +1,7 @@
 ---
 title:  "BlueSense"
 tech: >
-    Python, Flask, Java, JavaScript, Hadoop, Kafka, Storm, Spark, HDFS, Hive, MongoDB, Linux, AWS, Google Cloud Platform
+    Python, Flask, Java, JavaScript, Hadoop, Kafka, Storm, Spark, HDFS, Hive, MongoDB, Git, Jenkins, Linux, AWS, Google Cloud Platform
 client: KPMG
 from:  2014-01-02 00:00:00 +0000
 to: 2017-06-10 00:00:00 +0000
