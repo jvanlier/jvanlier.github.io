@@ -6,6 +6,8 @@ categories: blog
 permalink: evaluation-keplergl-covid-19-data
 math: false
 ---
+**Update 2020-05-02: [Created a map with real data of cumulative cases worldwide over time](/assets/blog/2020-05-01-evaluation-keplergl-covid-19-data/covid-19-map.html). I used this [data source](https://github.com/CSSEGISandData/COVID-19/).**
+
 I'm a big fan of visualizing how things change over time on maps. Previously, this had me plotting ugly maps with matplotlib-based tooling, writing jpegs to a filesystem and combining them to a video or gif with `ffmpeg`. Not an entirely pleasant experience. When I first realised that Uber's [Kepler.gl](https://kepler.gl/) not only looks great, but has built-in time series support as well, it got me pretty excited!
 
 I will evaluate Kepler.gl when used with geographic time series data. In particular, with the kind of daily data, aggregated per region, that we see a lot during the Covid-19 epidemic. The dataset that I'll use was made in a simulation of Covid-19 infections in neighbourhoods around Schiphol in The Netherlands, made earlier in [this post](https://jvlanalytics.nl/covid-19-simulation).
@@ -586,3 +588,5 @@ The most important things on my wishlist are:
 - Consistent binning for the hexbin.
 
 I'll try to reach out to the team to see where they stand on this. For now, I'm happy to start using it in my projects! Thanks for reading!
+
+[Click here for the code](https://github.com/jvanlier/blog-notebooks/tree/master/evaluation-keplergl-covid-19-data).
