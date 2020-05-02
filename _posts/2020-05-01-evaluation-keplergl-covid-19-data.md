@@ -6,7 +6,7 @@ categories: blog
 permalink: evaluation-keplergl-covid-19-data
 math: false
 ---
-I'm a big fan of visualizing how things change over time on maps. Previously, this had me plotting ugly maps with matplotlib-based tooling, writing `.jpegs` to a filesystem and combining them to a video or gif with `ffmpeg`. Not an entirely pleasant experience. When I first realised that Uber's [Kepler.gl](https://kepler.gl/) not only looks great, but has built-in time series support as well, it got me pretty excited!
+I'm a big fan of visualizing how things change over time on maps. Previously, this had me plotting ugly maps with matplotlib-based tooling, writing jpegs to a filesystem and combining them to a video or gif with `ffmpeg`. Not an entirely pleasant experience. When I first realised that Uber's [Kepler.gl](https://kepler.gl/) not only looks great, but has built-in time series support as well, it got me pretty excited!
 
 I will evaluate Kepler.gl when used with geographic time series data. In particular, with the kind of daily data, aggregated per region, that we see a lot during the Covid-19 epidemic. The dataset that I'll use was made in a simulation of Covid-19 infections in neighbourhoods around Schiphol in The Netherlands, made earlier in [this post](https://jvlanalytics.nl/covid-19-simulation).
 
@@ -32,7 +32,7 @@ START_DATE = date(2020, 2, 27) - timedelta(days=5)
 Okay, we have some data munging work to do first. Feel free to skip this and scroll down for the mapping goodies.
 
 ### Load population & geo data
-This is the same data as used in [my previous post](https://jvlanalytics.nl/covid-19-simulation), taken from Statistics Netherlands. I'm using `GeoPandas` to load it. The `wkt` format for Polygons is a string that Kepler.gl understands. These polygons are of neighbourhoods in The Netherlands. We also have the population numbers, which will be useful for normalizing data.
+This is the same data as used in [my previous post](https://jvlanalytics.nl/covid-19-simulation), taken from Statistics Netherlands. I'm using `GeoPandas` to load it. The `wkt` format for polygons is a string that Kepler.gl understands. These polygons are of neighbourhoods in The Netherlands. We also have the population numbers, which will be useful for normalizing data.
 
 
 ```python
