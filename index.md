@@ -1,7 +1,7 @@
 ---
 layout: landing
 ---
-I enjoy making things more intelligent and autonomous through Machine Learning.
+All-round Machine Learning Engineer that enjoys solving business problems with data.
 
 Key character traits:
 - Strong problem solver with attention to detail; can tackle loosely defined problems.
