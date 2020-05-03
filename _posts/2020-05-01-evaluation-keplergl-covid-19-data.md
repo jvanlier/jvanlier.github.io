@@ -317,7 +317,7 @@ df_daily_counts_geo["infected_percentage"] = \
      df_daily_counts_geo["pop"] * 100).round(1)
 ```
 
-We also need to do a bit of hacking in order to make Kepler normalize across the entire time series. This actually happens by default in the first two maps I'll show below, but not in the next two maps that follow (for understanable reasons). I'm using a small dummy triangle in the North Sea, outside of the visible area, with the relevant maximums:
+We also need to do a bit of hacking in order to make Kepler normalize across the entire time series. This actually happens by default in the first two maps I'll show below, but not in the next two maps that follow (for understandable reasons). I'm using a small dummy triangle in the North Sea, outside of the visible area, with the relevant maxima:
 
 ```python
 uniq_dates = df_daily_counts_geo.index.get_level_values("date").unique()
@@ -392,7 +392,7 @@ The timeline feature is activated here. While it looks good, I am already facing
 
 Kepler.gl seems to have been built for unaggregated data that is generated at a random moment in time. Which isn't a complete surprise, since this exactly describes the nature of Uber rides!
 
-Ideally, I'd use daily *new* cases rather than cumulative. If only we could inform Kepler to aggregate (sum) circles on the exact same coordinates instead of drawing them on top of each other, this would be a fantastic way to easily identify areas with a lot of growth in a particular point in time. We wouldn't be stuck with a 1 day time range in that case.
+Ideally, I'd use daily *new* cases instead of cumulative. If only we could inform Kepler to aggregate (sum) circles on the exact same coordinates instead of drawing them on top of each other, this would be a fantastic way to easily identify areas with a lot of growth in a particular time range of arbitrary length. 
 
 But, I have to admit, the playback feature is very nice:
 
