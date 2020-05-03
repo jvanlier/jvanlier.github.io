@@ -6,12 +6,11 @@ categories: blog
 permalink: evaluation-keplergl-covid-19-data
 math: false
 ---
-**Update 2020-05-02: [Created a map with real data of cumulative cases worldwide over time](/assets/blog/2020-05-01-evaluation-keplergl-covid-19-data/covid-19-map.html). I used this [data source](https://github.com/CSSEGISandData/COVID-19/).**
-
 I'm a big fan of visualizing how things change over time on maps. Previously, this had me plotting ugly maps with matplotlib-based tooling, writing jpegs to a filesystem and combining them to a video or gif with `ffmpeg`. Not an entirely pleasant experience. When I first realised that Uber's [Kepler.gl](https://kepler.gl/) not only looks great, but has built-in time series support as well, it got me pretty excited!
 
 I will evaluate Kepler.gl when used with geographic time series data. In particular, with the kind of daily data, aggregated per region, that we see a lot during the Covid-19 epidemic. The dataset that I'll use was made in a simulation of Covid-19 infections in neighbourhoods around Schiphol in The Netherlands, made earlier in [this post](https://jvlanalytics.nl/covid-19-simulation).
 
+**Update 2020-05-02:** I decided to also create a version of [the circle map (Map 1) with real worldwide data](/assets/blog/2020-05-01-evaluation-keplergl-covid-19-data/covid-19-map.html), rather than demoing only simulated data. I used [this data source](https://github.com/CSSEGISandData/COVID-19/). As I've explained below, try not to change the size of the time range, as that will just result in circles being drawn on top of each other. Refresh to reset it.
 
 ```python
 from datetime import date, timedelta
@@ -345,7 +344,7 @@ df = pd.concat((df_daily_counts_geo, df_dummy)).sort_index()
 Let's fire up Kepler. The config can be stored in a JSON file and passed into the `KeplerGl(..)` constructor as seen below. Modifications are best made in the GUI, after which the JSON can be stored in order to re-create the map later.  It has pretty sensible default behavior by automatically parsing the `lon`/`lat`/`geo_wkt` columns, but some tweaking is usually required still.
 
 ### Map 1: Circles like the famous John Hopkins Covid-19 map
-I'll first attempt to re-create the [John Hopkins Covid-19 map](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html?fbclid=IwAR0Q7KKPfPT3uhysJlRi8fTpqNzHkMkd6NOWDYA7tkDYuSFCuHs85Z2e-uw#/bda7594740fd40299423467b48e9ecf6), which for The Netherlands unfortunately isn't very detailed:
+I'll first attempt to re-create the [John Hopkins Covid-19 map](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html?fbclid=IwAR0Q7KKPfPT3uhysJlRi8fTpqNzHkMkd6NOWDYA7tkDYuSFCuHs85Z2e-uw#/bda7594740fd40299423467b48e9ecf6), which shows cumulative counts of reported infections. The underlying data is updated on a daily basis. It's not very detailed for The Netherlands, unfortunately: 
 
 ![John Hopkins map Europe](/assets/blog/2020-05-01-evaluation-keplergl-covid-19-data/img/john_hopkins.png "John Hopkins map Europe")
 
@@ -387,12 +386,14 @@ Screenshot:
 
 The timeline feature is activated here. While it looks good, I am already facing some significant usability issues:
 
-- Kepler.gl silently aggregates data. It does not work very well with daily data that's _already_ aggregated. If, for example, the time range is 2 days, 2 circles will be drawn on top of each other.
+- Kepler.gl does not work very well with data that's already aggregated per coordinate and per time interval. If, for example, the time range is 2 days, 2 circles will be drawn on top of each other.
 - Hence, I want the time range to be exactly 1 day. This isn't doable in the GUI, but we can edit the JSON file manually (see `timeRange`, fill in Unix timestamps such that the initial time is from 00:00:00 to 23:59:59 on the same day).
-- But now, with the time range indicator being exactly 1 day, it becomes too small to select. It's not possible anymore to navigate through the timeline by hand. I'm suck with using the play & pause buttons.
+- But now, with the time range indicator being exactly 1 day, it becomes too small to select. It's not possible anymore to navigate through the timeline by hand. I'm stuck with using the play & pause buttons.
 - The bottom graph doesn't show anything useful, even when setting the y-axis.
 
 Kepler.gl seems to have been built for unaggregated data that is generated at a random moment in time. Which isn't a complete surprise, since this exactly describes the nature of Uber rides!
+
+Ideally, I'd use daily *new* cases rather than cumulative. If only we could inform Kepler to aggregate (sum) circles on the exact same coordinates instead of drawing them on top of each other, this would be a fantastic way to easily identify areas with a lot of growth in a particular point in time. We wouldn't be stuck with a 1 day time range in that case.
 
 But, I have to admit, the playback feature is very nice:
 
@@ -409,11 +410,11 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 
 
 ### Map 2: Choropleth map
-Choropleth maps are common, but there are some significant downsides to them. For instance, they overemphasize the importance of large, potentially sparsely inhabited areas. Also, they hide differences within the regions and they may give the false impression of abrupt change at borders. 
+Choropleth maps are a common sight, but they can be tricky to interpret. For instance, they overemphasize the importance of large, potentially sparsely inhabited areas. Also, they hide differences within the regions and they may give the false impression of abrupt change at borders. 
 
 But, it just so happens that my population data is on the level of neighbourhoods, and taking the centroid and placing a circle there doesn't do it justice entirely either. Let's see what it looks like with neighbourhood polygons. This time, I'll use the normalized infection numbers which allows us to identify areas that are more heavily affected, relatively speaking.
 
-Unfortunately, it seems impossible to load *all* data. As mentioned earlier, Kepler.gl requires data to be passed in a denormalized form. The Polygons are huge, and with the constraint of having to include them for every timestep, it seems I'm hitting some dataset size limit. It results in a Python stacktrace (`tornado.iostream.StreamClosedError`) and a JavaScript error in the browser console. This might just work when using Kepler.gl directly rather than through Python, but personally I'm much more interested in the Python API than the JavaScript API. Fortunately, if we limit the dataset a bit to just 2 points per month, it does works:
+Unfortunately, it seems impossible to load *all* data. As mentioned earlier, Kepler.gl requires data to be passed in a denormalized form. The Polygons are huge, and with the constraint of having to include them for every timestep, it seems I'm hitting some dataset size limit. It results in a Python stacktrace (`tornado.iostream.StreamClosedError`) and a JavaScript error in the browser console. This might just work when using Kepler.gl directly rather than through Python, but personally I'm much more interested in the Python API than the JavaScript API. Fortunately, if we limit the dataset to just 2 points per month, it works:
 
 
 ```python
@@ -467,7 +468,7 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 
 
 
-As before, the key to getting the transitions *just right* is to edit the JSON file manually and change the unix timestamps in the `timeRange` field to be exactly equal to the interval of the data. The GUI doesn't allow for sufficiently precise control. If the `timeRange` is slightly too small, the data disappears shortly. If the window is slightly too large, the two days in the window will be drawn on top of each other.
+As before, the key to getting the transitions *just right* is to edit the JSON file manually and change the unix timestamps in the `timeRange` field to be exactly equal to the interval of the data. The GUI doesn't allow for sufficiently precise control. If the `timeRange` is slightly too small, the data disappears shortly. If the window is slightly too large, the two days in the window will be drawn on top of each other (which visually comes across as "flickering" due to the transparency).
 
 Now, there _is_ actually a hacky way to get daily data, but that involves taking the time control out of Kepler.gl and into the Python kernel:
 
@@ -522,7 +523,7 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 
 
 
-Due to lack of a timeline, we now have to use the tooltip to see the current date. There's also no way to pause this easily or to go back and forward in time. Hence, this workaround is mostly useful for making videos (which, then, do allow pause and scrolling backwards and forwards, but obviously at the expense of other useful interactive things such as tooltips).
+Due to not having the timeline controls, we now have to use the tooltip to see the current date. There's also no way to pause this easily or to go back and forward in time. Hence, this workaround is mostly useful for making videos (which, then, do allow pause and scrolling backwards and forwards, but obviously at the expense of other useful interactive things such as tooltips).
 
 ### Map 4: 3D histogram with hexbins
 Data Scientists love their histograms. The hexbin feature approximates a 3D histogram and looks pretty fancy.
@@ -579,12 +580,13 @@ This is not great from a from a Data Science purism perspective, but it doesn't 
 
 # Conclusion
 
-Kepler.gl looks fantastic and can be a great tool for exploring geographic time series data interactively. It is especially well suited for datasets of unaggregated events at random intervals. Special care must be taken when using pre-aggregated data on a fixed interval to prevent undesired aggregations.
+Kepler.gl looks fantastic and can be a great tool for exploring geographic time series interactively. It is especially well suited for datasets of unaggregated events at random intervals. Special care must be taken when using pre-aggregated data on a fixed interval.
 
 The most important things on my wishlist are:
+- Ability to aggregate data (mean/sum) if it's on the exact same coordinate (at the very least for Points and Polygons). 
+- Better support for fixed interval time series (e.g. daily). Getting the graph in the bottom to show something useful would be nice, but most importantly: having the ability to move the selected time range around when it is relatively small would be very useful.
 - Built-in support for normalizing across the timeline.
-- Better support for fixed interval time series (e.g. daily).
-- A way to ship geo data separately and join it inside Kepler.
+- A way to ship geo data separately and join it inside Kepler, in order to support large Polygon-based time series where the Polygons themselves remain static over time.
 - Consistent binning for the hexbin.
 
 I'll try to reach out to the team to see where they stand on this. For now, I'm happy to start using it in my projects! Thanks for reading!
