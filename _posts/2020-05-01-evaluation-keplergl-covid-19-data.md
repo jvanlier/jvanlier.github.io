@@ -469,7 +469,7 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 
 As before, the key to getting the transitions *just right* is to edit the JSON file manually and change the unix timestamps in the `timeRange` field to be exactly equal to the interval of the data. The GUI doesn't allow for sufficiently precise control. If the `timeRange` is slightly too small, the data disappears shortly. If the window is slightly too large, the two days in the window will be drawn on top of each other (which visually comes across as "flickering" due to the transparency).
 
-Now, there _is_ actually a hacky way to get daily data, but that involves taking the time control out of Kepler.gl and into the Python kernel. This is where we also need the trick to normalize across the entire time series, because we are only feeding in 1 day at a time:
+Now, there _is_ actually a hacky way to get daily data, but that involves taking the time control out of Kepler.gl and into the Python kernel. This is where we start needing the trick to normalize across the entire time series, because we are only feeding in 1 day at a time:
 
 
 ```python
