@@ -317,8 +317,7 @@ df_daily_counts_geo["infected_percentage"] = \
      df_daily_counts_geo["pop"] * 100).round(1)
 ```
 
-We also need to do a bit of hacking in order to make Kepler normalize across the entire time series. There is no built-in feature that does this. I'm using a small dummy triangle in the North Sea, outside of the visible area, with the relevant maximums:
-
+We also need to do a bit of hacking in order to make Kepler normalize across the entire time series. This actually happens by default in the first two maps I'll show below, but not in the next two maps that follow (for understanable reasons). I'm using a small dummy triangle in the North Sea, outside of the visible area, with the relevant maximums:
 
 ```python
 uniq_dates = df_daily_counts_geo.index.get_level_values("date").unique()
@@ -470,7 +469,7 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 
 As before, the key to getting the transitions *just right* is to edit the JSON file manually and change the unix timestamps in the `timeRange` field to be exactly equal to the interval of the data. The GUI doesn't allow for sufficiently precise control. If the `timeRange` is slightly too small, the data disappears shortly. If the window is slightly too large, the two days in the window will be drawn on top of each other (which visually comes across as "flickering" due to the transparency).
 
-Now, there _is_ actually a hacky way to get daily data, but that involves taking the time control out of Kepler.gl and into the Python kernel:
+Now, there _is_ actually a hacky way to get daily data, but that involves taking the time control out of Kepler.gl and into the Python kernel. This is where we also need the trick to normalize across the entire time series, because we are only feeding in 1 day at a time:
 
 
 ```python
@@ -526,7 +525,7 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 Due to not having the timeline controls, we now have to use the tooltip to see the current date. There's also no way to pause this easily or to go back and forward in time. Hence, this workaround is mostly useful for making videos (which, then, do allow pause and scrolling backwards and forwards, but obviously at the expense of other useful interactive things such as tooltips).
 
 ### Map 4: 3D histogram with hexbins
-Data Scientists love their histograms. The hexbin feature approximates a 3D histogram and looks pretty fancy.
+Data Scientists love their histograms. The hexbin feature approximates a 3D histogram and looks pretty fancy. This one also requires the "normalization across the entire time series" trick, probably because it would be quite complex to pre-compute all possible bins over the entire timeline.
 
 
 ```python
@@ -573,22 +572,21 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 
 
 
-There is a slight problem here with the color boundaries changing over time. This happens because my dummy triangle in the North Sea is no longer the max, due to summing multiple neighbourhoods into a single hex bin. This is where my workaround to normalize across the entire time series breaks down.
+The normalization trick isn't perfect in this setting: as you can see in the legend in the video, the color boundaries change over time. At some point in the timeline, my dummy triangle in the North Sea is no longer the maximum. A hexbin is a sum over multiple neighbourhoods and may be larger than the max of a single neighbourhood. 
 
-A fix isn't trivial, because the binning changes slightly as the map is moved around during playback.
-This is not great from a from a Data Science purism perspective, but it doesn't seem to have much impact here.
+A fix isn't trivial, because the binning changes slightly as the map is moved around during playback. In other words: the binning doesn't seem to be deterministic: it is influenced by the view settings.
+This is not great from a from a Data Science purism perspective, but it doesn't seem to have much impact on this particular visualization.
 
 # Conclusion
 
 Kepler.gl looks fantastic and can be a great tool for exploring geographic time series interactively. It is especially well suited for datasets of unaggregated events at random intervals. Special care must be taken when using pre-aggregated data on a fixed interval.
 
 The most important things on my wishlist are:
-- Ability to aggregate data (mean/sum) if it's on the exact same coordinate (at the very least for Points and Polygons). 
-- Better support for fixed interval time series (e.g. daily). Getting the graph in the bottom to show something useful would be nice, but most importantly: having the ability to move the selected time range around when it is relatively small would be very useful.
-- Built-in support for normalizing across the timeline.
+- Ability to aggregate data (mean/sum) if it's on the exact same coordinate (at the very least for Points and Polygons).
+- Better support for fixed interval time series (e.g. daily). Getting the graph in the bottom to show something useful would be nice, but most importantly: having the ability to  move the selected time range around when it is relatively small would be very useful.
 - A way to ship geo data separately and join it inside Kepler, in order to support large Polygon-based time series where the Polygons themselves remain static over time.
-- Consistent binning for the hexbin.
+- Built-in support for normalizing across the timeline for the Hexbin (or at least make the binning deterministic such that I can empirically determine the max myself for the      dummy region).
 
-I'll try to reach out to the team to see where they stand on this. For now, I'm happy to start using it in my projects! Thanks for reading!
+I'll try to reach out to the team to see where they stand on this. For now, I'm happy to start using it in my projects. Thanks for reading!
 
 [Click here for the code](https://github.com/jvanlier/blog-notebooks/tree/master/evaluation-keplergl-covid-19-data).
