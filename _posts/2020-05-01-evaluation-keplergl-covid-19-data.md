@@ -392,7 +392,7 @@ The timeline feature is activated here. While it looks good, I am already facing
 
 Kepler.gl seems to have been built for unaggregated data that is generated at a random moment in time. Which isn't a complete surprise, since this exactly describes the nature of Uber rides!
 
-Ideally, I'd use daily *new* cases instead of cumulative. If only we could inform Kepler to aggregate (sum) circles on the exact same coordinates instead of drawing them on top of each other, this would be a fantastic way to easily identify areas with a lot of growth in a particular time range of arbitrary length. 
+If only we could instruct Kepler to aggregate (sum) circles on the exact same coordinates instead of drawing them on top of each other, this would be a fantastic way to identify areas with a lot of growth in a particular time range of arbitrary length. 
 
 But, I have to admit, the playback feature is very nice:
 
