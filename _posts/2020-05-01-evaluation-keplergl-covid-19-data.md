@@ -524,7 +524,7 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 
 Due to not having the timeline controls, we now have to use the tooltip to see the current date. There's also no way to pause this easily or to go back and forward in time. Hence, this workaround is mostly useful for making videos (which, then, do allow pause and scrolling backwards and forwards, but obviously at the expense of other useful interactive things such as tooltips).
 
-### Map 4: 3D histogram with hexbins
+### Map 3: 3D histogram with hexbins
 Data Scientists love their histograms. The hexbin feature approximates a 3D histogram and looks pretty fancy. This one also requires the "normalization across the entire time series" trick, probably because it would be quite complex to pre-compute all possible bins over the entire timeline.
 
 
