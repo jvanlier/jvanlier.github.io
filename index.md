@@ -1,10 +1,10 @@
 ---
 layout: landing
 ---
-All-round Machine Learning Engineer that enjoys solving business problems with data.
+All-round senior Machine Learning Engineer that enjoys solving business problems with data.
 
-Key character traits:
-- Strong problem solver with attention to detail; can tackle loosely defined problems.
-- Able to initiate and drive projects to completion with minimal guidance in a fast-paced dynamic environment.
-- Strong communicator, able to explain things in a simple way to stakeholders, enjoys coaching and educating others.
+Currently available for a new freelance project!
 
+As a strong problem solver with attention to detail, I can help you tackle loosely defined data problems. I am able to drive projects to completion with minimal guidance, while at the same I go out of my way to involve stakeholders and mentor and educate colleagues.
+
+My experience revolves around Python, Spark, Keras, TensorFlow, Machine Learning, Deep Learning-based Computer Vision and Airflow. I usually find myself on the intersection of data science and engineering, but happy to focus solely on either for a while.
