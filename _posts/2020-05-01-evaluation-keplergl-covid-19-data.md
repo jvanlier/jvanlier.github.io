@@ -575,7 +575,9 @@ HTML('<video controls loop><source src="/assets/blog/2020-05-01-evaluation-keple
 The normalization trick isn't perfect in this setting: as you can see in the legend in the video, the color boundaries change over time. At some point in the timeline, my dummy triangle in the North Sea is no longer the maximum. A hexbin is a sum over multiple neighbourhoods and may be larger than the max of a single neighbourhood. 
 
 A fix isn't trivial, because the binning changes slightly as the map is moved around during playback. In other words: the binning doesn't seem to be deterministic: it is influenced by the view settings.
-This is not great from a Data Science purism perspective, but it doesn't seem to have much impact on this particular visualization.
+This is not great from a Data Science purism perspective, but it doesn't seem to have much impact on this particular visualization. 
+
+**Update 2020-05-14: [The bins shifting during playback is fixed in `keplergl==0.2.0`](https://github.com/keplergl/kepler.gl/issues/1103#issuecomment-628185589) and as a result, the workaround to normalize across the time series should now be a bit more robust.**
 
 # Conclusion
 
@@ -585,7 +587,8 @@ The most important things on my wishlist are:
 - Ability to aggregate values (mean/sum) on the exact same coordinate(s) (for Points and Polygons).
 - Better support for fixed interval time series (e.g. daily). Getting the graph in the bottom to show something useful would be nice, but most importantly: having the ability to move the selected time range around when it is relatively small would be very useful.
 - A way to ship geo data separately and join it inside Kepler, in order to support large Polygon-based time series where the Polygons themselves remain static over time.
-- Built-in support for normalizing across the timeline for the Hexbin (or at least make the binning deterministic such that I can empirically determine the max myself for the dummy region).
+- Built-in support for normalizing across the timeline for the Hexbin (or at least make the binning deterministic such that I can empirically determine the max myself for the dummy region). 
+  - **Update 2020-05-14: [The bins shifting during playback is fixed in `keplergl==0.2.0`](https://github.com/keplergl/kepler.gl/issues/1103#issuecomment-628185589).**
 
 I'll try to reach out to the team to see where they stand on this. For now, I'm happy to start using it in my projects. Thanks for reading!
 
