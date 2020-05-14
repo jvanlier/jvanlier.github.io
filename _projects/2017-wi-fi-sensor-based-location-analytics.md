@@ -6,7 +6,7 @@ client: KPMG
 from:  2013-12-01 00:00:00 +0000
 to: 2017-09-01 00:00:00 +0000
 ---
-I was part of a team that developed a system to measure the presence of Wi-Fi radios using custom Wi-Fi sensors. In essence, this enables insight into the approximate number of people in an area, how long they remain there, which route they take, how often they come back, etc. By leveraging historic data, it also becomes possible to predict these numbers into the future. This system was deployed at various clients in retail, public transport, facility management and a football stadium.
+I was part of a team that developed a system to measure the presence of Wi-Fi radios using custom Wi-Fi sensors. In essence, this enables insight into the approximate number of people in an area, how long they remain there, which route they take, how often they come back, etc. This system was deployed at various clients in retail, public transport, facility management and a football stadium.
 
 I started out on the Data Engineering side and gradually transitioned into Data Science. 
 
