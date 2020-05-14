@@ -13,4 +13,4 @@ This raises the question: can this data be utilized to create better products, m
 
 I investigated how (anonymized) travelers can be assigned into several clusters based on their behavior. I used Hive on a Hadoop cluster to calculate various 
 normalized behaviour indicators, applied the K-means clustering algorithm, visualized the results with matplotlib and Gephi and 
-drove the interpretation and validation of the results with business stakeholders.
+facilitated the interpretation and validation of the results with business stakeholders.
