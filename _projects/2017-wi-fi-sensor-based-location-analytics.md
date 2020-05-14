@@ -13,7 +13,7 @@ I started out on the Data Engineering side and gradually transitioned into Data 
 My engineering contributions:
 - Designing, implementing and maintaining a lambda-architecture based big data platform. 
 - Developing streaming data processing code and real-time summary statistics in Apache Storm (Java).
-- A framework to greatly simplfy PySpark-based batch jobs. Also, scheduling and monitoring them.
+- A framework to greatly simplify PySpark-based batch jobs. Also, scheduling and monitoring them.
 - Privacy by design: developed the anonymization pipeline involving a Trusted Third Party, and developed an opt-out system.
 - Built a Python/Flask/MongoDB/jQuery/Bootstrap based configuration management tool to simplify the administration of sensor locations, regions, maps, geometry, etc. This saved many hours of work.
 - Supervising Junior Data Engineers. 
