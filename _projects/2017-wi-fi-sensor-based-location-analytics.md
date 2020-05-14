@@ -24,5 +24,5 @@ Science:
 - Pivoting the product into a version for workplace utilization and occupancy monitoring, in order to more efficiently allocate teams to areas, and possibly close down an entire section of the building (saving a lot of money on exploitation costs).
 
 Fun side project:
-- Protyped an indoor navigation app for Android using iBeacons. Dijkstra-based routing, sensor fusion, proximity-triggered messaging managed by a Python backend.
+- Prototyped an indoor navigation app for Android using iBeacons. Dijkstra-based routing, sensor fusion, proximity-triggered messaging managed by a Python backend.
 
