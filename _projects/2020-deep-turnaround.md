@@ -11,4 +11,4 @@ This was an initiative to detect events during the aircraft handling process wit
 
 But next to that, I also took on a significant chunk of engineering: ETL pipelines (from videos to de-duplicated jpegs with pre-processing such as region-of-interest masks), low-level TensorFlow dataset batching code, building airflow DAGs for hyperparameter searches and experimentation, annotation tooling and maintaining Linux systems (on-prem and Azure VMs).
 
-In addition, I played an important role in getting the project off the ground: many meetings to even get the permission to use the data, convincing stakeholders, legal, discussions about anonymization, camera position meetings and site surveys, supervising juniors, training them on deep learning, etc.
+In addition, I played an important role in getting the project off the ground: many meetings to even get the permission to use the data, convincing stakeholders, legal, discussions about anonymization, camera position meetings and site surveys, helping to build the team, defining roadmaps etc.
