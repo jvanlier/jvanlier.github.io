@@ -1,6 +1,6 @@
 ---
 title:  "Public Transport Traveler Clustering"
-client: "Regional Dutch public transport provider (via KPMG)"
+client: "Public transport provider (via KPMG)"
 tech: > 
   Python (pandas, numpy, scikit-learn, matplotlib), Jupyter notebook, SQL, Hive, Hadoop, Spark, 
   Hortonworks big data cluster, Linux, Gephi,

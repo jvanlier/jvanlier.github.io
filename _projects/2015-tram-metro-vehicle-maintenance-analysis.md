@@ -1,6 +1,6 @@
 ---
 title:  "Tram & Metro Vehicle Maintenance Analysis"
-client: "Regional Dutch public transport provider (via KPMG)"
+client: "Public transport provider (via KPMG)"
 tech: > 
   Python (pandas, numpy, scikit-learn, matplotlib), Jupyter notebook, Java, SQL, Hive, Hadoop, Spark, 
   Hortonworks big data cluster, Linux, association rule mining, random forest classifier
