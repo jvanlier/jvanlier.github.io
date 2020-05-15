@@ -4,31 +4,33 @@ title: Contact
 permalink: /contact/
 ---
 
-<p>
-Email:  <a href="mailto:{{ site.email }}">{{ site.email }}</a>
-</p>
-<p>
-VAT: NL001795045B18
-</p>
-<br/>
 
-<ul class="social-media-list">
-  {% if site.linkedin_username %}
-    <li>
-    {% include icon-linkedin.html user=site.linkedin_name %}
-    </li>
-  {% endif %}
+<table>
+    <tr>
+        <td>Email:</td>
+        <td><a href="mailto:{{ site.email }}">{{ site.email }}</a></td>
+    </tr>
+    <tr>
+        <td>VAT ID:</td>
+        <td>NL001795045B18</td>
+    </tr>
+    <tr>
+        <td>Chamber of Commerce:&nbsp;</td>
+        <td>69518157</td>
+    </tr>
+{% if site.linkedin_username %}
+    <tr>
+        <td>LinkedIn:</td>
+        <td>{% include icon-linkedin.html user=site.linkedin_name %}</td>
+    </tr>
+{% endif %}
 
-  {% if site.github_username %}
-  <li>
-    {% include icon-github.html username=site.github_username %}
-  </li>
-  {% endif %}
+{% if site.github_username %}
+    <tr>
+        <td>GitHub:</td>
+        <td>{% include icon-github.html username=site.github_username %}</td>
+    </tr>
+{% endif %}
 
-  {% if site.twitter_username %}
-  <li>
-    {% include icon-twitter.html username=site.twitter_username %}
-  </li>
-  {% endif %}
-</ul>
+</table>
 
