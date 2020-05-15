@@ -1,7 +1,7 @@
 ---
 title:  "Wi-Fi-Sensor Based Location Analytics"
 tech: >
-    Python (numpy, pandas, matplotlib, scikit-learn, flask, jupyter), Java, JavaScript, Hadoop, Kafka, Storm, Spark, HDFS, Hive, MongoDB, Git, Jenkins, Linux, AWS, GCP, MCMC (PyMC3), time series forecasting (Machine Learning).
+    Python (numpy, pandas, matplotlib, scikit-learn, flask, jupyter), Java, JavaScript, Hadoop, Kafka, Storm, Spark, HDFS, Hive, MongoDB, Prometheus, Git, Jenkins, Linux, AWS, GCP, MCMC (PyMC3), time series forecasting (Machine Learning).
 client: KPMG
 from:  2013-12-01 00:00:00 +0000
 to: 2017-09-01 00:00:00 +0000
@@ -17,6 +17,7 @@ My engineering contributions:
 - Privacy by design: developed the anonymization pipeline involving a Trusted Third Party, and developed an opt-out system.
 - Built a Python/Flask/MongoDB/jQuery/Bootstrap based configuration management tool to simplify the administration of sensor locations, regions, maps, geometry, etc. This saved many hours of work.
 - Supervising Junior Data Engineers. 
+- Monitoring with Prometheus.
 
 Science:
 - Developing a real-time Crowd Monitor for the KPMG Restaurant, with a short-term prediction (30 mins ahead). This was beneficial for internal marketing and helped our colleagues avoid crowds and queues. 
