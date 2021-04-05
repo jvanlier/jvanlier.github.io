@@ -4,11 +4,20 @@ layout: default
 
 <h1 class="post-title">{{ page.title | escape }}</h1>
 
+{% comment %}
+Using site.time to decide whether to show "present" as to date or not.
+This will not automatically switch when we hit the date without a redeploy.
+{% endcomment %}
+
 <ul class="timeline">
 {% assign sortedProjects = site.projects | sort: 'to' %}
     {% for item in sortedProjects reversed %}
         {% assign timeFrom = item.from | date: "%b-%Y" %}
-        {% assign timeTo = item.to | date: "%b-%Y" %}
+        {% if item.to > site.time %}
+            {% assign timeTo = "present" %}
+        {% else %}
+            {% assign timeTo = item.to | date: "%b-%Y" %}
+        {% endif %}
             <li>
                 <strong>{{ item.title }}</strong>
                 <span style="float: right">
