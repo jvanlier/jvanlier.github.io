@@ -24,7 +24,6 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  jvanlier
 linkedin_username: jori-van-lier-5874915
 linkedin_name: Jori van Lier
-google_analytics: UA-104131098-1
 
 # Build settings
 markdown: kramdown
