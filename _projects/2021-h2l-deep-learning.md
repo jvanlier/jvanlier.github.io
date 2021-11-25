@@ -5,7 +5,7 @@ tech: Python, Keras, TensorFlow, TensorRT, CNNs / ConvNets, Object Detection, Ke
 from: 2020-08-01 00:00:00 +0200
 to: 2021-08-31 00:00:00 +0200
 ---
-We build a robot that drives through tulips fields autonomously, while detecting and localizing sick tulips and applying treatments.
+H2L Robotics build robots that drive through tulips fields autonomously, while detecting and localizing sick tulips and applying a treatment.
 
-I work on the neural network that detects the tulips using cameras. That means building tools around data processing (e.g. for annotations), writing Keras/TensorFlow code, performing a lot of experiments to figure out what works and what doesn't.
+I worked on the neural network that detects the tulips using cameras. That involved building tools around data processing (e.g. for annotations), writing Keras/TensorFlow code, performing a lot of experiments to figure out what works and what doesn't.
 
